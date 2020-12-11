@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "easy-http/guzzle-layer": "^0.1.0"
     },
     "autoload": {
         "psr-4": {
