@@ -1,0 +1,25 @@
+{
+    "name": "payment-gateways/paypal-sdk",
+    "description": "PayPal SDK",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Darío Rivera",
+            "email": "fermius.us@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PaymentGateway\\PayPalSdk\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PaymentGateway\\PayPalSdk\\Tests\\": "tests"
+        }
+    }
+}
