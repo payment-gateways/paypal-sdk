@@ -16,6 +16,8 @@ class PayPalApi extends BaseMock
     use HasBasicAuthentication;
     use HasBearerAuthentication;
 
+    private const PRODUCT_PATTERN = '/v1\/catalogs\/products\/(PROD-[0-9a-zA-Z]+)/';
+
     protected $hostname = 'api.sandbox.paypal.com';
 
     protected $user = 'AeA1QIZXiflr1_-r0U2UbWTziOWX1GRQer5jkUq4ZfWT5qwb6qQRPq7jDtv57TL4POEEezGLdutcxnkJ';
@@ -88,7 +90,7 @@ class PayPalApi extends BaseMock
             } else {
                 $this->response = $this->response(404, '');
             }
-        } elseif (preg_match('/v1\/catalogs\/products\/(PROD-[0-9a-zA-Z]+)/', $request->getUri()->getPath(), $matches)) {
+        } elseif (preg_match(self::PRODUCT_PATTERN, $request->getUri()->getPath(), $matches)) {
             if ($request->getMethod() === 'PATCH') {
                 $id = $matches[1];
 
