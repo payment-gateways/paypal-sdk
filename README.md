@@ -84,9 +84,9 @@ $product->setDescription('product description')
 $response = $service->updateProduct($product)->getStatusCode();  // 204
 ```
 
-### You can also create a token for external use
+### Token creation
 
-To create a token use the `getToken` method.
+You can also create a token for external use. To create a token use the `getToken` method.
 
 ```php
 use PaymentGateway\PayPalSdk\PayPalService;
