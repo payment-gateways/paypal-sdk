@@ -36,10 +36,13 @@ To get all products use the `getProducts` method.
 use PaymentGateway\PayPalSdk\PayPalService;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getProducts()->parseJson();
 ```
 
 ### Create a product
+
+To create a product use the `createProduct` method.
 
 ```php
 use PaymentGateway\PayPalSdk\PayPalService;
@@ -48,6 +51,7 @@ use PaymentGateway\PayPalSdk\Constants\ProductCategory;
 use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $product = new StoreProductRequest('My new product', ProductType::SERVICE);
 $product->setDescription('product description')
@@ -61,7 +65,7 @@ $response = $service->createProduct($product)->parseJson();
 
 ### Update a product
 
-To get all products use the `getProducts` method.
+To update a product use the `updateProduct` method.
 
 ```php
 use PaymentGateway\PayPalSdk\PayPalService;
@@ -69,6 +73,7 @@ use PaymentGateway\PayPalSdk\Constants\ProductCategory;
 use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $product = new UpdateProductRequest('PROD-XY458712546854478');
 $product->setDescription('product description')
@@ -77,4 +82,16 @@ $product->setDescription('product description')
     ->setHomeUrl('https://example.com');
 
 $response = $service->updateProduct($product)->getStatusCode();  // 204
+```
+
+### You can also create a token for external use
+
+To create a token use the `getToken` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$response = $service->getToken(); // array
 ```
