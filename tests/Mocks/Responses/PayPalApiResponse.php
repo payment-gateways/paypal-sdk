@@ -57,22 +57,22 @@ class PayPalApiResponse
     private static function invalidRequest($issue, $description, $field): array
     {
         return [
-            "name" => "INVALID_REQUEST",
-            "message" => "Request is not well-formed, syntactically incorrect, or violates schema.",
-            "debug_id" => "e411aa6259157",
-            "details" => [
+            'name' => 'INVALID_REQUEST',
+            'message' => 'Request is not well-formed, syntactically incorrect, or violates schema.',
+            'debug_id' => 'e411aa6259157',
+            'details' => [
                 [
-                    "field" => "/$field",
-                    "location" => "body",
-                    "issue" => $issue,
-                    "description" => $description
+                    'field' => "/$field",
+                    'location' => 'body',
+                    'issue' => $issue,
+                    'description' => $description
                 ]
             ],
-            "links" => [
+            'links' => [
                 [
-                    "href" => "https://developer.paypal.com/docs/api/v1/billing/subscriptions#INVALID_REQUEST",
-                    "rel" => "information_link",
-                    "method" => "GET"
+                    'href' => 'https://developer.paypal.com/docs/api/v1/billing/subscriptions#INVALID_REQUEST',
+                    'rel' => 'information_link',
+                    'method' => 'GET'
                 ]
             ]
         ];
@@ -80,26 +80,26 @@ class PayPalApiResponse
 
     public static function missingRequiredParameter(string $name): array
     {
-        return self::invalidRequest("MISSING_REQUIRED_PARAMETER", "A required field is missing.", $name);
+        return self::invalidRequest('MISSING_REQUIRED_PARAMETER', 'A required field is missing.', $name);
     }
 
     public static function resourceNotFound()
     {
         return [
-            "name" => "RESOURCE_NOT_FOUND",
-            "message" => "The specified resource does not exist.",
-            "debug_id" => "16e587c60e0f1",
-            "details" => [
+            'name' => 'RESOURCE_NOT_FOUND',
+            'message' => 'The specified resource does not exist.',
+            'debug_id' => '16e587c60e0f1',
+            'details' => [
                 [
-                    "issue" => "INVALID_RESOURCE_ID",
-                    "description" => "Invalid product id"
+                    'issue' => 'INVALID_RESOURCE_ID',
+                    'description' => 'Invalid product id'
                 ]
             ],
-            "links" => [
+            'links' => [
                 [
-                    "href" => "https://developer.paypal.com/docs/api/v1/billing/subscriptions#RESOURCE_NOT_FOUND",
-                    "rel" => "information_link",
-                    "method" => "GET"
+                    'href' => 'https://developer.paypal.com/docs/api/v1/billing/subscriptions#RESOURCE_NOT_FOUND',
+                    'rel' => 'information_link',
+                    'method' => 'GET'
                 ]
             ]
         ];
