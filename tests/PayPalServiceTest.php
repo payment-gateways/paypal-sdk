@@ -51,8 +51,6 @@ class PayPalServiceTest extends TestCase
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
 
-        $service->getToken();
-        $service->withHandler($payPalApi);
         $response = $service->createProduct($product);
 
         $products = $payPalApi->getProducts();
@@ -76,8 +74,6 @@ class PayPalServiceTest extends TestCase
         $service->setAuth($this->username, $this->password);
         $service->withHandler(new PayPalApi());
 
-        $service->getToken();
-        $service->withHandler(new PayPalApi());
         $response = $service->getProducts();
 
         $this->assertSame(200, $response->getStatusCode());
@@ -101,8 +97,6 @@ class PayPalServiceTest extends TestCase
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
 
-        $service->getToken();
-        $service->withHandler($payPalApi);
         $response = $service->updateProduct($product);
 
         $this->assertSame(204, $response->getStatusCode());

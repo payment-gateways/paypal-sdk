@@ -38,11 +38,13 @@ class PayPalService
             return $this->token;
         }
 
-        $this->client->prepareRequest('POST', $this->baseUri . '/v1/oauth2/token');
-        $this->client->getRequest()->setBasicAuth($this->username, $this->password);
-        $this->client->getRequest()->setQuery(['grant_type' => 'client_credentials']);
+        $client = clone $this->client;
 
-        $this->token = $this->client->execute()->parseJson();
+        $client->prepareRequest('POST', $this->baseUri . '/v1/oauth2/token');
+        $client->getRequest()->setBasicAuth($this->username, $this->password);
+        $client->getRequest()->setQuery(['grant_type' => 'client_credentials']);
+
+        $this->token = $client->execute()->parseJson();
 
         return $this->token;
     }
