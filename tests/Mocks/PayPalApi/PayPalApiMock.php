@@ -1,22 +1,25 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Tests\Mocks;
+namespace PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use PaymentGateway\PayPalSdk\Constants\ProductType;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
+use PaymentGateway\PayPalSdk\Tests\Mocks\BaseMock;
 use PaymentGateway\PayPalSdk\Tests\Mocks\Concerns\HasBasicAuthentication;
 use PaymentGateway\PayPalSdk\Tests\Mocks\Concerns\HasBearerAuthentication;
 use PaymentGateway\PayPalSdk\Tests\Mocks\Concerns\HasFixedResponse;
 use PaymentGateway\PayPalSdk\Tests\Mocks\Responses\PayPalApiResponse;
 use Psr\Http\Message\RequestInterface;
 
-class PayPalApi extends BaseMock
+class PayPalApiMock extends BaseMock
 {
     use HasFixedResponse;
     use HasBasicAuthentication;
     use HasBearerAuthentication;
 
     private const PRODUCT_PATTERN = '/v1\/catalogs\/products\/(PROD-[0-9a-zA-Z]+)/';
+    private const PLAN_PATTERN = '/v1\/billing\/plans\/(P-[0-9a-zA-Z]+)/';
 
     protected $hostname = 'api.sandbox.paypal.com';
 
@@ -24,31 +27,18 @@ class PayPalApi extends BaseMock
     protected $pass = 'ECYYrrSHdKfk_Q0EdvzdGkzj58a66kKaUQ5dZAEv4HvvtDId2_DpSuYDB088BZxGuMji7G4OFUnPog6p';
 
     protected $products = [];
+    protected $plans = [];
 
     protected ?PromiseInterface $response = null;
 
-    public function loadProduct($request): array
+    public function getProduct(string $id): ?array
     {
-        $product = PayPalApiResponse::productCreated($request);
-        $this->products[] = $product;
-
-        return $product;
+        return $this->showProduct($id);
     }
 
-    public function getProduct($id): ?array
+    public function getPlan(string $id): array
     {
-        $position = $this->arrayPos(array_column($this->products, 'id'), $id);
-
-        if ($position !== false) {
-            return $this->products[$position];
-        }
-
-        return null;
-    }
-
-    public function getProducts(): array
-    {
-        return $this->products;
+        return $this->showPlan($id);
     }
 
     public function __invoke(RequestInterface $request)
@@ -78,7 +68,7 @@ class PayPalApi extends BaseMock
                 if (!$this->validateAuthToken($request)) {
                     $this->failureAuthentication();
                 } else {
-                    $this->productList();
+                    $this->productListResponse();
                 }
             } elseif ($request->getMethod() === 'POST') {
                 if (!$this->validateAuthToken($request)) {
@@ -88,10 +78,23 @@ class PayPalApi extends BaseMock
                     $this->createProduct($json);
                 }
             } else {
-                $this->response = $this->response(404, '');
+                $this->response = $this->response(404, '', [], 'Not Found');
             }
         } elseif (preg_match(self::PRODUCT_PATTERN, $request->getUri()->getPath(), $matches)) {
-            if ($request->getMethod() === 'PATCH') {
+            if ($request->getMethod() === 'GET') {
+                $id = $matches[1];
+
+                if (!in_array($id, array_column($this->products, 'id'))) {
+                    $this->response = $this->response(
+                        404,
+                        PayPalApiResponse::resourceNotFound('product id'),
+                        [],
+                        'Not Found'
+                    );
+                } else {
+                    $this->showProductResponse($id);
+                }
+            } elseif ($request->getMethod() === 'PATCH') {
                 $id = $matches[1];
 
                 if (!in_array($id, array_column($this->products, 'id'))) {
@@ -116,6 +119,42 @@ class PayPalApi extends BaseMock
 
                     $this->response = $this->response(204, '', [], 'No Content');
                 }
+            } else {
+                $this->response = $this->response(405, '', [], 'Method Not Allowed');
+            }
+        } elseif ($request->getUri()->getPath() === '/v1/billing/plans') {
+            if ($request->getMethod() === 'GET') {
+                if (!$this->validateAuthToken($request)) {
+                    $this->failureAuthentication();
+                } else {
+                    $this->planListResponse();
+                }
+            } elseif ($request->getMethod() === 'POST') {
+                if (!$this->validateAuthToken($request)) {
+                    $this->failureAuthentication();
+                } else {
+                    $json = $this->parseArray(json_decode($request->getBody()->getContents()));
+                    $this->createPlan($json);
+                }
+            } else {
+                $this->response = $this->response(405, '', [], 'Method Not Allowed');
+            }
+        } elseif (preg_match(self::PLAN_PATTERN, $request->getUri()->getPath(), $matches)) {
+            if ($request->getMethod() === 'GET') {
+                $id = $matches[1];
+
+                if (!in_array($id, array_column($this->plans, 'id'))) {
+                    $this->response = $this->response(
+                        404,
+                        PayPalApiResponse::resourceNotFound('planId'),
+                        [],
+                        'Not Found'
+                    );
+                } else {
+                    $this->showPlanResponse($id);
+                }
+            } elseif (in_array($request->getMethod(), ['POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'])) {
+                $this->response = $this->response(404, '', [], 'Not Found');
             } else {
                 $this->response = $this->response(405, '', [], 'Method Not Allowed');
             }
@@ -195,8 +234,96 @@ class PayPalApi extends BaseMock
         $this->response = $this->jsonResponse(201, $product, [], 'OK');
     }
 
-    private function productList(): void
+    private function productList(): array
     {
-        $this->response = $this->jsonResponse(200, PayPalApiResponse::productList(), [], 'OK');
+        $list = ['products' => []];
+
+        foreach ($this->products as $product) {
+            unset($product['type']);
+            $list['products'][] = $product;
+        }
+
+        return $list;
+    }
+
+    private function productListResponse(): void
+    {
+        $this->response = $this->jsonResponse(200, $this->productList(), [], 'OK');
+    }
+
+    private function showProduct(string $id): array
+    {
+        $ids = array_column($this->products, 'id');
+        $position = $this->arrayPos($ids, $id);
+
+        return $this->products[$position];
+    }
+
+    private function showProductResponse(string $id): void
+    {
+        $this->response = $this->jsonResponse(200, $this->showProduct($id), [], 'OK');
+    }
+
+    private function createPlan(array $request): void
+    {
+        if (!isset($request['name'])) {
+            $this->response = $this->jsonResponse(
+                400,
+                PayPalApiResponse::missingRequiredParameter('name'),
+                [],
+                'Bad Request'
+            );
+            return;
+        }
+
+        if (!isset($request['payment_preferences'])) {
+            $this->response = $this->jsonResponse(
+                400,
+                PayPalApiResponse::missingRequiredParameter('payment_preferences'),
+                [],
+                'Bad Request'
+            );
+            return;
+        }
+
+        if (!isset($request['status'])) {
+            $request['status'] = PlanStatus::ACTIVE;
+        }
+
+        $plan = PayPalApiResponse::planCreated($request);
+        $this->plans[] = $plan;
+
+        $this->response = $this->jsonResponse(201, $plan, [], 'Created');
+    }
+
+    private function planList(): array
+    {
+        $list = ['plans' => []];
+
+        foreach ($this->plans as $plan) {
+            unset($plan['product_id']);
+            $plan['links'] = $plan['links'][0];
+            $list['plans'][] = $plan;
+        }
+
+        return $list;
+    }
+
+    private function planListResponse(): void
+    {
+        $this->response = $this->jsonResponse(200, $this->planList(), [], 'OK');
+    }
+
+    private function showPlan(string $id): array
+    {
+        $ids = array_column($this->plans, 'id');
+        $position = $this->arrayPos($ids, $id);
+
+        return $this->plans[$position];
+    }
+
+    private function showPlanResponse(string $id): void
+    {
+        $this->response = $this->jsonResponse(200, $this->showPlan($id), [], 'OK');
     }
 }

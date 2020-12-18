@@ -2,6 +2,8 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\Mocks\Responses;
 
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
+
 class PayPalApiResponse
 {
     public static function token(): array
@@ -59,7 +61,7 @@ class PayPalApiResponse
         return [
             'name' => 'INVALID_REQUEST',
             'message' => 'Request is not well-formed, syntactically incorrect, or violates schema.',
-            'debug_id' => 'e411aa6259157',
+            'debug_id' => uniqid(),
             'details' => [
                 [
                     'field' => "/$field",
@@ -83,16 +85,16 @@ class PayPalApiResponse
         return self::invalidRequest('MISSING_REQUIRED_PARAMETER', 'A required field is missing.', $name);
     }
 
-    public static function resourceNotFound()
+    public static function resourceNotFound($identifier)
     {
         return [
             'name' => 'RESOURCE_NOT_FOUND',
             'message' => 'The specified resource does not exist.',
-            'debug_id' => '16e587c60e0f1',
+            'debug_id' => uniqid(),
             'details' => [
                 [
                     'issue' => 'INVALID_RESOURCE_ID',
-                    'description' => 'Invalid product id'
+                    'description' => 'Invalid ' . $identifier
                 ]
             ],
             'links' => [
@@ -199,5 +201,47 @@ class PayPalApiResponse
                 ]
             ]
         ];
+    }
+
+    public static function planCreated(array $request, string $id = ''): array
+    {
+        if (!$id) {
+            $id = 'P-' . substr(bin2hex(uniqid()), 0, 24);
+        }
+
+        $product = [
+            'id' => $id,
+            'product_id' => $request['product_id'],
+            'name' => $request['name'],
+            'status' => $request['status'] ?? PlanStatus::ACTIVE,
+            'usage_type' => 'LICENSED',
+            'create_time' => '2020-12-17T03:44:39Z',
+            'links' => [
+                [
+                    'href' =>  "https://api.sandbox.paypal.com/v1/billing/plans/$id",
+                    'rel' =>  'self',
+                    'method' =>  'GET',
+                    'encType' =>  'application/json'
+                ],
+                [
+                    'href' =>  "https://api.sandbox.paypal.com/v1/billing/plans/$id",
+                    'rel' =>  'edit',
+                    'method' =>  'PATCH',
+                    'encType' =>  'application/json'
+                ],
+                [
+                    'href' =>  "https://api.sandbox.paypal.com/v1/billing/plans/$id",
+                    'rel' =>  'self',
+                    'method' =>  'POST',
+                    'encType' =>  'application/json'
+                ]
+            ]
+        ];
+
+        if (isset($request['description'])) {
+            $product['description'] = $request['description'];
+        }
+
+        return $product;
     }
 }
