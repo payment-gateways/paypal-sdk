@@ -17,7 +17,6 @@ use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
 use PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi\PayPalApiMock;
-use PaymentGateway\PayPalSdk\Tests\Mocks\Responses\PayPalApiResponse;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasPlan;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasProduct;
 use PHPUnit\Framework\TestCase;
