@@ -6,6 +6,7 @@ use EasyHttp\GuzzleLayer\GuzzleClient;
 use EasyHttp\LayerContracts\Contracts\HttpClientResponse;
 use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
 
 class PayPalService
@@ -75,11 +76,11 @@ class PayPalService
         return $this->client->execute();
     }
 
-    public function updateProduct(UpdateProductRequest $product): HttpClientResponse
+    public function updateProduct(UpdateProductRequest $productRequest): HttpClientResponse
     {
-        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/catalogs/products/' . $product->getId());
+        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/catalogs/products/' . $productRequest->getId());
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
-        $this->client->getRequest()->setJson($product->toArray());
+        $this->client->getRequest()->setJson($productRequest->toArray());
 
         return $this->client->execute();
     }
@@ -105,6 +106,15 @@ class PayPalService
     {
         $this->client->prepareRequest('GET', $this->baseUri . '/v1/billing/plans/' . $id);
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
+
+        return $this->client->execute();
+    }
+
+    public function updatePlan(UpdatePlanRequest $planRequest): HttpClientResponse
+    {
+        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/billing/plans/' . $planRequest->getId());
+        $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
+        $this->client->getRequest()->setJson($planRequest->toArray());
 
         return $this->client->execute();
     }

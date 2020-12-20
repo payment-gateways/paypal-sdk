@@ -21,13 +21,13 @@ class PayPalApiMock extends BaseMock
     private const PRODUCT_PATTERN = '/v1\/catalogs\/products\/(PROD-[0-9a-zA-Z]+)/';
     private const PLAN_PATTERN = '/v1\/billing\/plans\/(P-[0-9a-zA-Z]+)/';
 
-    protected $hostname = 'api.sandbox.paypal.com';
+    protected string $hostname = 'api.sandbox.paypal.com';
 
     protected $user = 'AeA1QIZXiflr1_-r0U2UbWTziOWX1GRQer5jkUq4ZfWT5qwb6qQRPq7jDtv57TL4POEEezGLdutcxnkJ';
     protected $pass = 'ECYYrrSHdKfk_Q0EdvzdGkzj58a66kKaUQ5dZAEv4HvvtDId2_DpSuYDB088BZxGuMji7G4OFUnPog6p';
 
-    protected $products = [];
-    protected $plans = [];
+    protected array $products = [];
+    protected array $plans = [];
 
     protected ?PromiseInterface $response = null;
 
@@ -152,6 +152,76 @@ class PayPalApiMock extends BaseMock
                     );
                 } else {
                     $this->showPlanResponse($id);
+                }
+            } elseif ($request->getMethod() === 'PATCH') {
+                $id = $matches[1];
+
+                if (!in_array($id, array_column($this->plans, 'id'))) {
+                    $this->response = $this->response(
+                        404,
+                        PayPalApiResponse::resourceNotFound('planId'),
+                        [],
+                        'Not Found'
+                    );
+                } else {
+                    $json = $this->parseArray(json_decode($request->getBody()->getContents()));
+
+                    $ids = array_column($this->plans, 'id');
+                    $position = $this->arrayPos($ids, $id);
+
+                    foreach ($json as $change) {
+                        $field = $change['path'];
+
+                        if ($change['op'] === 'replace') {
+                            $plan = &$this->plans[$position];
+
+                            if ($field === '/description') {
+                                $this->plans[$position][$field] = $change['value'];
+                            } elseif ($field === '/payment_preferences/auto_bill_outstanding') {
+                                $plan['payment_preferences']['auto_bill_outstanding'] = $change['value'];
+                            } elseif ($field === '/payment_preferences/payment_failure_threshold') {
+                                $plan['payment_preferences']['payment_failure_threshold'] = $change['value'];
+                            } elseif ($field === '/payment_preferences/setup_fee') {
+                                $originalCurrency = $plan['payment_preferences']['setup_fee']['currency_code'];
+                                $newCurrency = $change['value']['currency_code'];
+                                if ($originalCurrency !== $newCurrency) {
+                                    return $this->jsonResponse(
+                                        422,
+                                        PayPalApiResponse::unprocessableEntityForCurrencyMismatch(),
+                                        [],
+                                        'Unprocessable Entity'
+                                    );
+                                } else {
+                                    $plan['payment_preferences']['setup_fee'] = $change['value'];
+                                }
+                            } elseif ($field === '/payment_preferences/setup_fee_failure_action') {
+                                $plan['payment_preferences']['setup_fee_failure_action'] = $change['value'];
+                            } else {
+                                return $this->jsonResponse(
+                                    400,
+                                    PayPalApiResponse::invalidPatchPath($change['value']),
+                                    [],
+                                    'Bad Request'
+                                );
+                            }
+                        } elseif (in_array($change['op'], ['add', 'remove', 'copy', 'move', 'test'])) {
+                            return $this->response(
+                                422,
+                                PayPalApiResponse::unprocessableEntityForOperation($change['op']),
+                                [],
+                                'Unprocessable Entity'
+                            );
+                        } else {
+                            return $this->jsonResponse(
+                                400,
+                                PayPalApiResponse::malformedRequestJson('0/op'),
+                                [],
+                                'Bad Request'
+                            );
+                        }
+                    }
+
+                    $this->response = $this->response(204, '', [], 'No Content');
                 }
             } elseif (in_array($request->getMethod(), ['POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'])) {
                 $this->response = $this->response(404, '', [], 'Not Found');
@@ -290,8 +360,33 @@ class PayPalApiMock extends BaseMock
             $request['status'] = PlanStatus::ACTIVE;
         }
 
+        $request['id'] = 'P-' . substr(bin2hex(uniqid()), 0, 24);
+        $request['usage_type'] = 'LICENSED';
+        $request['create_time'] = '2020-12-17T03:44:39Z';
+
+        $request['links'] = [
+            [
+                'href' =>  'https://api.sandbox.paypal.com/v1/billing/plans/' . $request['id'],
+                'rel' =>  'self',
+                'method' =>  'GET',
+                'encType' =>  'application/json'
+            ],
+            [
+                'href' =>  'https://api.sandbox.paypal.com/v1/billing/plans/' . $request['id'],
+                'rel' =>  'edit',
+                'method' =>  'PATCH',
+                'encType' =>  'application/json'
+            ],
+            [
+                'href' =>  'https://api.sandbox.paypal.com/v1/billing/plans/' . $request['id'],
+                'rel' =>  'self',
+                'method' =>  'POST',
+                'encType' =>  'application/json'
+            ]
+        ];
+
+        $this->plans[] = $request;
         $plan = PayPalApiResponse::planCreated($request);
-        $this->plans[] = $plan;
 
         $this->response = $this->jsonResponse(201, $plan, [], 'Created');
     }

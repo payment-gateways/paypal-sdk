@@ -6,17 +6,57 @@ use PaymentGateway\PayPalSdk\Subscriptions\Constants\InitialPaymentFailureAction
 
 class PaymentPreferences
 {
-    protected bool $autoBillOutstanding = true;
-
     protected Money $setupFee;
 
-    protected string $setupFeeFailureAction = InitialPaymentFailureAction::CANCEL;
+    protected bool $autoBillOutstanding = true;
 
     protected int $paymentFailureThreshold = 0;
+
+    protected string $setupFeeFailureAction = InitialPaymentFailureAction::CANCEL;
 
     public function __construct(Money $setupFee)
     {
         $this->setupFee = $setupFee;
+    }
+
+    public function getSetupFee(): Money
+    {
+        return $this->setupFee;
+    }
+
+    public function setSetupFee(Money $setupFee): void
+    {
+        $this->setupFee = $setupFee;
+    }
+
+    public function isAutoBillOutstanding(): bool
+    {
+        return $this->autoBillOutstanding;
+    }
+
+    public function setAutoBillOutstanding(bool $autoBillOutstanding): void
+    {
+        $this->autoBillOutstanding = $autoBillOutstanding;
+    }
+
+    public function getPaymentFailureThreshold(): int
+    {
+        return $this->paymentFailureThreshold;
+    }
+
+    public function setPaymentFailureThreshold(int $paymentFailureThreshold): void
+    {
+        $this->paymentFailureThreshold = $paymentFailureThreshold;
+    }
+
+    public function getSetupFeeFailureAction(): string
+    {
+        return $this->setupFeeFailureAction;
+    }
+
+    public function setSetupFeeFailureAction(string $setupFeeFailureAction): void
+    {
+        $this->setupFeeFailureAction = $setupFeeFailureAction;
     }
 
     public function toArray(): array

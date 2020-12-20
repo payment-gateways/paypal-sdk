@@ -5,6 +5,7 @@ namespace PaymentGateway\PayPalSdk\Requests;
 use PaymentGateway\PayPalSdk\Requests\Concerns\HasDescription;
 use PaymentGateway\PayPalSdk\Requests\Concerns\HasPlanStatus;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
+use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
@@ -13,13 +14,12 @@ class StorePlanRequest
 {
     use HasDescription;
     use HasPlanStatus;
+    use HasPaymentPreferences;
 
     protected string $productId;
     protected string $name;
 
     protected BillingCycleSet $billingCycleSet;
-
-    protected PaymentPreferences $paymentPreferences;
 
     public function __construct(string $productId, string $name, BillingCycleSet $billingCycleSet)
     {
@@ -28,9 +28,6 @@ class StorePlanRequest
         $this->billingCycleSet = $billingCycleSet;
     }
 
-    /**
-     * @return string
-     */
     public function getProductId(): string
     {
         return $this->productId;
@@ -63,18 +60,6 @@ class StorePlanRequest
     public function setBillingCycleSet(BillingCycleSet $billingCycleSet): self
     {
         $this->billingCycleSet = $billingCycleSet;
-
-        return $this;
-    }
-
-    public function getPaymentPreferences(): PaymentPreferences
-    {
-        return $this->paymentPreferences;
-    }
-
-    public function setPaymentPreferences(PaymentPreferences $paymentPreferences): self
-    {
-        $this->paymentPreferences = $paymentPreferences;
 
         return $this;
     }
