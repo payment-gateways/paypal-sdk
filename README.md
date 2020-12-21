@@ -109,6 +109,26 @@ if (!$response->isSuccessful()) {
 }
 ```
 
+## Authentication
+
+Go to [PayPal Developer site](https://developer.paypal.com/developer/applications) and get the Client ID and secret for your app.
+These credentials can be used in the service authentication as follows: 
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+```
+
+Thus, you can test the service authentication using the `getToken` method.
+
+```php
+$response = $service->getToken(); // array
+```
+
+You don't need to execute the `getToken` method for using the PayPal APIs. This function is only for testing purposes.
+
 ## Subscriptions API
 
 You can use billing plans and subscriptions to create subscriptions that process recurring PayPal payments for physical or digital goods, or services.
@@ -195,18 +215,4 @@ $response = $service->updatePlan($planRequest);
 if (!$response->isSuccessful()) {
     var_dump($response->toArray());     // check the errors
 }
-```
-
-## Utilities
-
-### Token creation
-
-You can also create a token for external use. To create a token use the `getToken` method.
-
-```php
-use PaymentGateway\PayPalSdk\PayPalService;
-
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-$response = $service->getToken(); // array
 ```
