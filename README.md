@@ -29,7 +29,7 @@ composer require payment-gateways/paypal-sdk
 
 ## Authentication
 
-Go to [PayPal Developer site](https://developer.paypal.com/developer/applications) and get the Client ID and secret for your app.
+Go to [PayPal Developer site](https://developer.paypal.com/developer/applications) and get the **Client ID** and **Secret** for your app.
 These credentials can be used in the service authentication as follows:
 
 ```php
