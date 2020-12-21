@@ -2,13 +2,13 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService;
 
-use PaymentGateway\PayPalSdk\Constants\ProductCategory;
-use PaymentGateway\PayPalSdk\Constants\ProductType;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 use PaymentGateway\PayPalSdk\PayPalService;
-use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;

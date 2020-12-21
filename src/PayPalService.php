@@ -3,15 +3,16 @@
 namespace PaymentGateway\PayPalSdk;
 
 use EasyHttp\GuzzleLayer\GuzzleClient;
+use EasyHttp\LayerContracts\Contracts\EasyClientContract;
 use EasyHttp\LayerContracts\Contracts\HttpClientResponse;
-use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 
 class PayPalService
 {
-    protected $client;
+    protected EasyClientContract $client;
     protected string $baseUri;
     protected string $username;
     protected string $password;

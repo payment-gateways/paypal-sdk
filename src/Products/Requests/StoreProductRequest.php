@@ -1,11 +1,11 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Requests;
+namespace PaymentGateway\PayPalSdk\Products\Requests;
 
-use PaymentGateway\PayPalSdk\Requests\Concerns\HasCategory;
-use PaymentGateway\PayPalSdk\Requests\Concerns\HasDescription;
-use PaymentGateway\PayPalSdk\Requests\Concerns\HasHomeUrl;
-use PaymentGateway\PayPalSdk\Requests\Concerns\HasImageUrl;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasCategory;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasHomeUrl;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasImageUrl;
 
 class StoreProductRequest
 {
