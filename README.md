@@ -40,6 +40,18 @@ $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getProducts()->parseJson();
 ```
 
+### Get a product
+
+To get a single products use the `getProduct` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$response = $service->getProduct('PROD-8R6565867F172242R')->parseJson();
+```
+
 ### Create a product
 
 To create a product use the `createProduct` method.
@@ -83,6 +95,86 @@ $product->setDescription('product description')
 
 $response = $service->updateProduct($product)->getStatusCode();  // 204
 ```
+
+## Subscriptions API
+
+You can use billing plans and subscriptions to create subscriptions that process recurring PayPal payments for physical or digital goods, or services.
+
+### List plans
+
+To get all plans use the `getPlans` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$response = $service->getPlans()->parseJson();
+```
+
+### Get a plan
+
+To get a single plan use the `getPlan` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$response = $service->getPlan('P-18T532823A424032WL7NIVUA')->parseJson();
+```
+
+### Create a plan
+
+To create a product use the `createPlan` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
+use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
+use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
+use PaymentGateway\PayPalSdk\Subscriptions\Money;
+use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
+use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+
+$frequency = new Frequency(\PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH, 1);
+$pricingSchema = new PricingSchema(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '350'));
+$billingCycle = new RegularBillingCycle($frequency, $pricingSchema);
+$billingCycleSet = new BillingCycleSet();
+$billingCycleSet->addBillingCycle($billingCycle);
+$plan = new StorePlanRequest('PROD-8R6565867F172242R', 'New Plan', $billingCycleSet);
+
+// ['id' => 'P-XY...', 'product_id' => 'PROD-8R6565867F172242R', 'name' => 'My Plan', ...]
+$response = $service->createPlan($plan)->parseJson();
+```
+
+### Update a plan
+
+To update a product use the `updatePlan` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
+use PaymentGateway\PayPalSdk\Subscriptions\Money;
+use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+
+$money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, '250');
+$paymentPreferences = new PaymentPreferences($money);
+$planRequest = new UpdatePlanRequest('P-18T532823A424032WL7NIVUA');
+$planRequest->setPaymentPreferences($paymentPreferences);
+
+$response = $service->updatePlan($planRequest)->getStatusCode();  // 204
+```
+
+## Utilities
 
 ### Token creation
 
