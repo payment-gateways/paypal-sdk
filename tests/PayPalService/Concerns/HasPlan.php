@@ -30,6 +30,6 @@ trait HasPlan
         $payPalApi = $payPalApi ?? new PayPalApiMock();
         $service->withHandler($payPalApi);
 
-        return $service->createPlan($this->createStorePlanRequest($productId))->parseJson();
+        return $service->createPlan($this->createStorePlanRequest($productId))->toArray();
     }
 }

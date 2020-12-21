@@ -65,9 +65,10 @@ class PayPalServiceTest extends TestCase
         $payPalApi = new PayPalApiMock();
         $service->withHandler($payPalApi);
         $response = $service->createProduct($product);
-        $json = $response->parseJson();
+        $json = $response->toArray();
 
-        $this->assertSame(201, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
         $this->assertSame('My new product', $json['name']);
         $this->assertSame('product description', $json['description']);
         $this->assertSame(ProductCategory::SOFTWARE, $json['category']);
@@ -85,9 +86,10 @@ class PayPalServiceTest extends TestCase
         $product = $this->fakeProduct($service);
 
         $response = $service->getProducts();
-        $json = $response->parseJson();
+        $json = $response->toArray();
 
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(200, $response->getResponse()->getStatusCode());
         $this->assertArrayHasKey('products', $json);
         $this->assertSame($product['name'], $json['products'][0]['name']);
     }
@@ -103,9 +105,10 @@ class PayPalServiceTest extends TestCase
         $product = $this->fakeProduct($service, $payPalApi);
 
         $response = $service->getProduct($product['id']);
-        $json = $response->parseJson();
+        $json = $response->toArray();
 
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(200, $response->getResponse()->getStatusCode());
         $this->assertSame($product['id'], $json['id']);
         $this->assertSame($product['name'], $json['name']);
     }
@@ -128,7 +131,8 @@ class PayPalServiceTest extends TestCase
 
         $response = $service->updateProduct($productRequest);
 
-        $this->assertSame(204, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(204, $response->getResponse()->getStatusCode());
         $this->assertSame('product description', $payPalApi->getProduct($product['id'])['description']);
         $this->assertSame(ProductCategory::ACADEMIC_SOFTWARE, $payPalApi->getProduct($product['id'])['category']);
         $this->assertSame('https://example.com/productimage.jpg', $payPalApi->getProduct($product['id'])['image_url']);
@@ -153,9 +157,10 @@ class PayPalServiceTest extends TestCase
         $plan = new StorePlanRequest($prod['id'], 'New Plan', $billingCycleSet);
 
         $response = $service->createPlan($plan);
-        $planId = $response->parseJson()['id'];
+        $planId = $response->toArray()['id'];
 
-        $this->assertSame(201, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
         //$this->assertSame(PayPalApiResponse::planCreated($plan->toArray(), $planId), $response->parseJson());
     }
 
@@ -171,9 +176,10 @@ class PayPalServiceTest extends TestCase
         $plan = $this->fakePlan($service, $product['id'], $payPalApi);
 
         $response = $service->getPlans();
-        $json = $response->parseJson();
+        $json = $response->toArray();
 
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(200, $response->getResponse()->getStatusCode());
         $this->assertArrayHasKey('plans', $json);
         $this->assertSame($plan['name'], $json['plans'][0]['name']);
     }
@@ -190,9 +196,10 @@ class PayPalServiceTest extends TestCase
         $plan = $this->fakePlan($service, $product['id'], $payPalApi);
 
         $response = $service->getPlan($plan['id']);
-        $json = $response->parseJson();
+        $json = $response->toArray();
 
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(200, $response->getResponse()->getStatusCode());
         $this->assertSame($plan['name'], $json['name']);
         $this->assertSame($product['id'], $json['product_id']);
     }
@@ -216,7 +223,8 @@ class PayPalServiceTest extends TestCase
 
         $response = $service->updatePlan($planRequest);
 
-        $this->assertSame(204, $response->getStatusCode());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(204, $response->getResponse()->getStatusCode());
         $this->assertSame(
             "$value",
             $payPalApi->getPlan($plan['id'])['payment_preferences']['setup_fee']['value']

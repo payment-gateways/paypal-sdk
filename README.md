@@ -8,7 +8,10 @@
 
 # PayPal SDK
 
-This is a lightweight SDK for [PayPal REST APIS](https://developer.paypal.com/docs/api/overview/).
+This is an SDK for [PayPal REST APIS](https://developer.paypal.com/docs/api/overview/). The following APIs are currently supported.
+
+- [Catalog Products API v1](https://developer.paypal.com/docs/api/catalog-products/v1)
+- [Subscriptions API v1](https://developer.paypal.com/docs/api/subscriptions/v1)
 
 <a href="https://sonarcloud.io/dashboard?id=payment-gateways_paypal-sdk"><img src="https://sonarcloud.io/api/project_badges/measure?project=payment-gateways_paypal-sdk&metric=security_rating" alt="Bugs"></a>
 <a href="https://sonarcloud.io/dashboard?id=payment-gateways_paypal-sdk"><img src="https://sonarcloud.io/api/project_badges/measure?project=payment-gateways_paypal-sdk&metric=bugs" alt="Bugs"></a>
@@ -37,7 +40,7 @@ use PaymentGateway\PayPalSdk\PayPalService;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-$response = $service->getProducts()->parseJson();
+$response = $service->getProducts()->toArray();
 ```
 
 ### Get a product
@@ -49,7 +52,7 @@ use PaymentGateway\PayPalSdk\PayPalService;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-$response = $service->getProduct('PROD-8R6565867F172242R')->parseJson();
+$response = $service->getProduct('PROD-8R6565867F172242R')->toArray();
 ```
 
 ### Create a product
@@ -65,14 +68,20 @@ use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
-$product = new StoreProductRequest('My new product', ProductType::SERVICE);
-$product->setDescription('product description')
+$productRequest = new StoreProductRequest('My new product', ProductType::SERVICE);
+$productRequest->setDescription('product description')
     ->setCategory(ProductCategory::SOFTWARE)
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');
 
-// ['id' => 'PROD-XY...', 'name' => 'My new product', ...]
-$response = $service->createProduct($product)->parseJson();
+$response = $service->createProduct($productRequest);
+
+if (!$response->isSuccessful()) {
+    var_dump($response->toArray());     // check the errors
+} else {
+    // ['id' => 'PROD-XY...', 'name' => 'My new product', ...]
+    $response->toArray();
+}
 ```
 
 ### Update a product
@@ -87,13 +96,17 @@ use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
-$product = new UpdateProductRequest('PROD-XY458712546854478');
-$product->setDescription('product description')
+$productRequest = new UpdateProductRequest('PROD-XY458712546854478');
+$productRequest->setDescription('product description')
     ->setCategory(ProductCategory::ACADEMIC_SOFTWARE)
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');
 
-$response = $service->updateProduct($product)->getStatusCode();  // 204
+$response = $service->updateProduct($productRequest);
+
+if (!$response->isSuccessful()) {
+    var_dump($response->toArray());     // check the errors
+}
 ```
 
 ## Subscriptions API
@@ -109,7 +122,7 @@ use PaymentGateway\PayPalSdk\PayPalService;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-$response = $service->getPlans()->parseJson();
+$response = $service->getPlans()->toArray();
 ```
 
 ### Get a plan
@@ -121,7 +134,7 @@ use PaymentGateway\PayPalSdk\PayPalService;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-$response = $service->getPlan('P-18T532823A424032WL7NIVUA')->parseJson();
+$response = $service->getPlan('P-18T532823A424032WL7NIVUA')->toArray();
 ```
 
 ### Create a plan
@@ -146,10 +159,16 @@ $pricingSchema = new PricingSchema(new Money(CurrencyCode::UNITED_STATES_DOLLAR,
 $billingCycle = new RegularBillingCycle($frequency, $pricingSchema);
 $billingCycleSet = new BillingCycleSet();
 $billingCycleSet->addBillingCycle($billingCycle);
-$plan = new StorePlanRequest('PROD-8R6565867F172242R', 'New Plan', $billingCycleSet);
+$planRequest = new StorePlanRequest('PROD-8R6565867F172242R', 'New Plan', $billingCycleSet);
 
-// ['id' => 'P-XY...', 'product_id' => 'PROD-8R6565867F172242R', 'name' => 'My Plan', ...]
-$response = $service->createPlan($plan)->parseJson();
+$response = $service->createPlan($planRequest);
+
+if (!$response->isSuccessful()) {
+    var_dump($response->toArray());     // check the errors
+} else {
+    // ['id' => 'P-XY...', 'product_id' => 'PROD-8R6565867F172242R', 'name' => 'My Plan', ...]
+    $response->toArray();
+}
 ```
 
 ### Update a plan
@@ -171,7 +190,11 @@ $paymentPreferences = new PaymentPreferences($money);
 $planRequest = new UpdatePlanRequest('P-18T532823A424032WL7NIVUA');
 $planRequest->setPaymentPreferences($paymentPreferences);
 
-$response = $service->updatePlan($planRequest)->getStatusCode();  // 204
+$response = $service->updatePlan($planRequest);
+
+if (!$response->isSuccessful()) {
+    var_dump($response->toArray());     // check the errors
+}
 ```
 
 ## Utilities
