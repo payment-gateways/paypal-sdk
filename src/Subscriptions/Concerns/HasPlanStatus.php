@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Requests\Concerns;
+namespace PaymentGateway\PayPalSdk\Subscriptions\Concerns;
 
 trait HasPlanStatus
 {

@@ -58,9 +58,9 @@ To create a product use the `createProduct` method.
 
 ```php
 use PaymentGateway\PayPalSdk\PayPalService;
-use PaymentGateway\PayPalSdk\Constants\ProductType;
-use PaymentGateway\PayPalSdk\Constants\ProductCategory;
-use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
+use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
@@ -81,8 +81,8 @@ To update a product use the `updateProduct` method.
 
 ```php
 use PaymentGateway\PayPalSdk\PayPalService;
-use PaymentGateway\PayPalSdk\Constants\ProductCategory;
-use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
+use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
@@ -136,7 +136,7 @@ use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
-use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
@@ -160,7 +160,7 @@ To update a product use the `updatePlan` method.
 use PaymentGateway\PayPalSdk\PayPalService;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
-use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 
 $service = new PayPalService('https://api.sandbox.paypal.com');

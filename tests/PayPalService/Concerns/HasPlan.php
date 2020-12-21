@@ -3,7 +3,7 @@
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns;
 
 use PaymentGateway\PayPalSdk\PayPalService;
-use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;

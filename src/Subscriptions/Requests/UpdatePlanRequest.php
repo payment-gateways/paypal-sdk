@@ -1,8 +1,8 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Requests;
+namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
 
-use PaymentGateway\PayPalSdk\Requests\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
 
 class UpdatePlanRequest
