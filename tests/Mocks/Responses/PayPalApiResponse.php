@@ -2,6 +2,8 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\Mocks\Responses;
 
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
+
 class PayPalApiResponse
 {
     public static function token(): array
@@ -54,12 +56,35 @@ class PayPalApiResponse
         ];
     }
 
-    private static function invalidRequest($issue, $description, $field): array
-    {
-        return [
+    /**
+     * @param string $issue
+     * @param string $description
+     * @param string $field
+     * @param array|string|null $value
+     * @param array|null $links
+     * @return array
+     */
+    private static function invalidRequest(
+        string $issue,
+        string $description,
+        string $field,
+        $value = null,
+        array $links = null
+    ): array {
+        if (is_null($links)) {
+            $links = [
+                [
+                    'href' => 'https://developer.paypal.com/docs/api/v1/billing/subscriptions#INVALID_REQUEST',
+                    'rel' => 'information_link',
+                    'method' => 'GET'
+                ]
+            ];
+        }
+
+        $response = [
             'name' => 'INVALID_REQUEST',
             'message' => 'Request is not well-formed, syntactically incorrect, or violates schema.',
-            'debug_id' => 'e411aa6259157',
+            'debug_id' => uniqid(),
             'details' => [
                 [
                     'field' => "/$field",
@@ -68,14 +93,14 @@ class PayPalApiResponse
                     'description' => $description
                 ]
             ],
-            'links' => [
-                [
-                    'href' => 'https://developer.paypal.com/docs/api/v1/billing/subscriptions#INVALID_REQUEST',
-                    'rel' => 'information_link',
-                    'method' => 'GET'
-                ]
-            ]
+            'links' => $links
         ];
+
+        if ($value) {
+            $response['details']['value'] = $value;
+        }
+
+        return $response;
     }
 
     public static function missingRequiredParameter(string $name): array
@@ -83,16 +108,30 @@ class PayPalApiResponse
         return self::invalidRequest('MISSING_REQUIRED_PARAMETER', 'A required field is missing.', $name);
     }
 
-    public static function resourceNotFound()
+    public static function malformedRequestJson(string $name): array
+    {
+        return self::invalidRequest('MALFORMED_REQUEST_JSON', 'The request JSON is not well formed.', $name, null, []);
+    }
+
+    /**
+     * @param string|array $value
+     * @return array
+     */
+    public static function invalidPatchPath($value): array
+    {
+        return self::invalidRequest('INVALID_PATCH_PATH', 'The specified field cannot be patched.', '0/path', $value);
+    }
+
+    public static function resourceNotFound($identifier): array
     {
         return [
             'name' => 'RESOURCE_NOT_FOUND',
             'message' => 'The specified resource does not exist.',
-            'debug_id' => '16e587c60e0f1',
+            'debug_id' => uniqid(),
             'details' => [
                 [
                     'issue' => 'INVALID_RESOURCE_ID',
-                    'description' => 'Invalid product id'
+                    'description' => 'Invalid ' . $identifier
                 ]
             ],
             'links' => [
@@ -103,6 +142,58 @@ class PayPalApiResponse
                 ]
             ]
         ];
+    }
+
+    private static function unprocessableEntity(
+        string $issue,
+        string $description,
+        string $field = '',
+        $value = null
+    ): array {
+        $response = [
+            'name' => 'UNPROCESSABLE_ENTITY',
+            'message' => 'The requested action could not be performed, semantically incorrect, or failed business validation.', // phpcs:ignore
+            'debug_id' => uniqid(),
+            'details' => [
+                [
+                    'field' => "/$field",
+                    'location' => 'body',
+                    'issue' => $issue,
+                    'description' => $description
+                ]
+            ],
+            'links' => [
+                [
+                    'href' => 'https://developer.paypal.com/docs/api/v1/billing/subscriptions#UNPROCESSABLE_ENTITY',
+                    'rel' => 'information_link',
+                    'method' => 'GET'
+                ]
+            ]
+        ];
+
+        if ($value) {
+            $response['details']['value'] = $value;
+        }
+
+        return $response;
+    }
+
+    public static function unprocessableEntityForOperation(string $value): array
+    {
+        return self::unprocessableEntity(
+            'UNSUPPORTED_PATCH_OPERATION',
+            'The specified patch operation not supported for this field.',
+            '0/op',
+            $value
+        );
+    }
+
+    public static function unprocessableEntityForCurrencyMismatch(): array
+    {
+        return self::unprocessableEntity(
+            'CURRENCY_MISMATCH',
+            'The currency code across plan mismatch'
+        );
     }
 
     public static function productCreated(array $request): array
@@ -148,56 +239,22 @@ class PayPalApiResponse
         return $product;
     }
 
-    public static function productList(): array
+    public static function planCreated(array $request): array
     {
-        return [
-            'total_items' => 20,
-            'total_pages' => 10,
-            'products' => [
-                [
-                    'id' => '72255d4849af8ed6e0df1173',
-                    'name' => 'Video Streaming Service',
-                    'description' => 'Video streaming service',
-                    'create_time' => '2018-12-10T21:20:49Z',
-                    'links' => [
-                        [
-                            'href' => 'https://api.paypal.com/v1/catalogs/products/72255d4849af8ed6e0df1173',
-                            'rel' => 'self',
-                            'method' => 'GET'
-                        ]
-                    ]
-                ],
-                [
-                    'id' => 'PROD-XYAB12ABSB7868434',
-                    'name' => 'Video Streaming Service',
-                    'description' => 'Audio streaming service',
-                    'create_time' => '2018-12-10T21:20:49Z',
-                    'links' => [
-                        [
-                            'href' => 'https://api.paypal.com/v1/catalogs/products/125d4849af8ed6e0df18',
-                            'rel' => 'self',
-                            'method' => 'GET'
-                        ]
-                    ]
-                ]
-            ],
-            'links' => [
-                [
-                    'href' => 'https://api.paypal.com/v1/catalogs/products?page_size=2&page=1',
-                    'rel' => 'self',
-                    'method' => 'GET'
-                ],
-                [
-                    'href' => 'https://api.paypal.com/v1/catalogs/products?page_size=2&page=2',
-                    'rel' => 'next',
-                    'method' => 'GET'
-                ],
-                [
-                    'href' => 'https://api.paypal.com/v1/catalogs/products?page_size=2&page=10',
-                    'rel' => 'last',
-                    'method' => 'GET'
-                ]
-            ]
+        $plan = [
+            'id' => $request['id'],
+            'product_id' => $request['product_id'],
+            'name' => $request['name'],
+            'status' => $request['status'] ?? PlanStatus::ACTIVE,
+            'usage_type' => $request['usage_type'],
+            'create_time' => $request['create_time'],
+            'links' => $request['links'],
         ];
+
+        if (isset($request['description'])) {
+            $plan['description'] = $request['description'];
+        }
+
+        return $plan;
     }
 }
