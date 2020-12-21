@@ -94,14 +94,8 @@ $productRequest->setDescription('product description')
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');
 
-$response = $service->createProduct($productRequest);
-
-if (!$response->isSuccessful()) {
-    var_dump($response->toArray());     // check the errors
-} else {
-    // ['id' => 'PROD-XY...', 'name' => 'My new product', ...]
-    $response->toArray();
-}
+// ['id' => 'PROD-XY...', 'name' => 'My new product', ...]
+$response = $service->createProduct($productRequest)->toArray();
 ```
 
 ### Update a product
@@ -122,11 +116,7 @@ $productRequest->setDescription('product description')
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');
 
-$response = $service->updateProduct($productRequest);
-
-if (!$response->isSuccessful()) {
-    var_dump($response->toArray());     // check the errors
-}
+$service->updateProduct($productRequest);
 ```
 
 ## Subscriptions API
@@ -181,14 +171,8 @@ $billingCycleSet = new BillingCycleSet();
 $billingCycleSet->addBillingCycle($billingCycle);
 $planRequest = new StorePlanRequest('PROD-8R6565867F172242R', 'New Plan', $billingCycleSet);
 
-$response = $service->createPlan($planRequest);
-
-if (!$response->isSuccessful()) {
-    var_dump($response->toArray());     // check the errors
-} else {
-    // ['id' => 'P-XY...', 'product_id' => 'PROD-8R6565867F172242R', 'name' => 'My Plan', ...]
-    $response->toArray();
-}
+// ['id' => 'P-XY...', 'product_id' => 'PROD-8R6565867F172242R', 'name' => 'My Plan', ...]
+$response = $service->createPlan($planRequest)->toArray();
 ```
 
 ### Update a plan
@@ -210,9 +194,22 @@ $paymentPreferences = new PaymentPreferences($money);
 $planRequest = new UpdatePlanRequest('P-18T532823A424032WL7NIVUA');
 $planRequest->setPaymentPreferences($paymentPreferences);
 
-$response = $service->updatePlan($planRequest);
+$service->updatePlan($planRequest);
+```
+
+## Error Handling
+
+In general, You can use the `toArray` method in all responses to get the service response data (except for patch operations),
+otherwise you'll get an array with errors if something fails. You can check for a successful response using the `isSuccessful` method.
+. 
+
+```php
+$response = $service->getProducts();
 
 if (!$response->isSuccessful()) {
     var_dump($response->toArray());     // check the errors
+} else {
+    // array with data
+    $response->toArray();
 }
 ```
