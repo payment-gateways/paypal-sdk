@@ -27,6 +27,26 @@ composer require payment-gateways/paypal-sdk
 
 # Usage
 
+## Authentication
+
+Go to [PayPal Developer site](https://developer.paypal.com/developer/applications) and get the Client ID and secret for your app.
+These credentials can be used in the service authentication as follows:
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+```
+
+Thus, you can test the service authentication using the `getToken` method.
+
+```php
+$response = $service->getToken(); // array
+```
+
+You don't need to execute the `getToken` method for using the PayPal APIs. This function is only for testing purposes.
+
 ## Catalog products API
 
 Merchants can use the Catalog Products API to create products, which are goods and services.
@@ -108,26 +128,6 @@ if (!$response->isSuccessful()) {
     var_dump($response->toArray());     // check the errors
 }
 ```
-
-## Authentication
-
-Go to [PayPal Developer site](https://developer.paypal.com/developer/applications) and get the Client ID and secret for your app.
-These credentials can be used in the service authentication as follows: 
-
-```php
-use PaymentGateway\PayPalSdk\PayPalService;
-
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
-```
-
-Thus, you can test the service authentication using the `getToken` method.
-
-```php
-$response = $service->getToken(); // array
-```
-
-You don't need to execute the `getToken` method for using the PayPal APIs. This function is only for testing purposes.
 
 ## Subscriptions API
 
