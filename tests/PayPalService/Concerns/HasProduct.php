@@ -26,6 +26,6 @@ trait HasProduct
         $payPalApi = $payPalApi ?? new PayPalApiMock();
         $service->withHandler($payPalApi);
 
-        return $service->createProduct($this->createStoreProductRequest())->parseJson();
+        return $service->createProduct($this->createStoreProductRequest())->toArray();
     }
 }
