@@ -3,15 +3,19 @@
 namespace PaymentGateway\PayPalSdk;
 
 use EasyHttp\GuzzleLayer\GuzzleClient;
-use EasyHttp\LayerContracts\Contracts\HttpClientResponse;
-use PaymentGateway\PayPalSdk\Requests\StorePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdatePlanRequest;
-use PaymentGateway\PayPalSdk\Requests\UpdateProductRequest;
+use EasyHttp\LayerContracts\Contracts\EasyClientContract;
+use PaymentGateway\PayPalSdk\Contracts\PayPalResponse;
+use PaymentGateway\PayPalSdk\Responses\GetResponse;
+use PaymentGateway\PayPalSdk\Responses\PostResponse;
+use PaymentGateway\PayPalSdk\Responses\PatchResponse;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 
 class PayPalService
 {
-    protected $client;
+    protected EasyClientContract $client;
     protected string $baseUri;
     protected string $username;
     protected string $password;
@@ -51,71 +55,71 @@ class PayPalService
         return $this->token;
     }
 
-    public function createProduct(StoreProductRequest $product): HttpClientResponse
+    public function createProduct(StoreProductRequest $product): PayPalResponse
     {
         $this->client->prepareRequest('POST', $this->baseUri . '/v1/catalogs/products');
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
         $this->client->getRequest()->setJson($product->toArray());
 
-        return $this->client->execute();
+        return new PostResponse($this->client->execute());
     }
 
-    public function getProducts(): HttpClientResponse
+    public function getProducts(): PayPalResponse
     {
         $this->client->prepareRequest('GET', $this->baseUri . '/v1/catalogs/products');
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
 
-        return $this->client->execute();
+        return new GetResponse($this->client->execute());
     }
 
-    public function getProduct(string $id): HttpClientResponse
+    public function getProduct(string $id): PayPalResponse
     {
         $this->client->prepareRequest('GET', $this->baseUri . '/v1/catalogs/products/' . $id);
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
 
-        return $this->client->execute();
+        return new GetResponse($this->client->execute());
     }
 
-    public function updateProduct(UpdateProductRequest $productRequest): HttpClientResponse
+    public function updateProduct(UpdateProductRequest $productRequest): PayPalResponse
     {
         $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/catalogs/products/' . $productRequest->getId());
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
         $this->client->getRequest()->setJson($productRequest->toArray());
 
-        return $this->client->execute();
+        return new PatchResponse($this->client->execute());
     }
 
-    public function createPlan(StorePlanRequest $storePlanRequest): HttpClientResponse
+    public function createPlan(StorePlanRequest $storePlanRequest): PayPalResponse
     {
         $this->client->prepareRequest('POST', $this->baseUri . '/v1/billing/plans');
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
         $this->client->getRequest()->setJson($storePlanRequest->toArray());
 
-        return $this->client->execute();
+        return new PostResponse($this->client->execute());
     }
 
-    public function getPlans(): HttpClientResponse
+    public function getPlans(): PayPalResponse
     {
         $this->client->prepareRequest('GET', $this->baseUri . '/v1/billing/plans');
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
 
-        return $this->client->execute();
+        return new GetResponse($this->client->execute());
     }
 
-    public function getPlan(string $id): HttpClientResponse
+    public function getPlan(string $id): PayPalResponse
     {
         $this->client->prepareRequest('GET', $this->baseUri . '/v1/billing/plans/' . $id);
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
 
-        return $this->client->execute();
+        return new GetResponse($this->client->execute());
     }
 
-    public function updatePlan(UpdatePlanRequest $planRequest): HttpClientResponse
+    public function updatePlan(UpdatePlanRequest $planRequest): PayPalResponse
     {
         $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/billing/plans/' . $planRequest->getId());
         $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
         $this->client->getRequest()->setJson($planRequest->toArray());
 
-        return $this->client->execute();
+        return new PatchResponse($this->client->execute());
     }
 }

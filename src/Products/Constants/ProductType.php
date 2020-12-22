@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Constants;
+namespace PaymentGateway\PayPalSdk\Products\Constants;
 
 interface ProductType
 {

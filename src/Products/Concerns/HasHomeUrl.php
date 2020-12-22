@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Requests\Concerns;
+namespace PaymentGateway\PayPalSdk\Products\Concerns;
 
 trait HasHomeUrl
 {

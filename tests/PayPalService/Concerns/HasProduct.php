@@ -2,10 +2,10 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns;
 
-use PaymentGateway\PayPalSdk\Constants\ProductCategory;
-use PaymentGateway\PayPalSdk\Constants\ProductType;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 use PaymentGateway\PayPalSdk\PayPalService;
-use PaymentGateway\PayPalSdk\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
 use PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi\PayPalApiMock;
 
 trait HasProduct
@@ -26,6 +26,6 @@ trait HasProduct
         $payPalApi = $payPalApi ?? new PayPalApiMock();
         $service->withHandler($payPalApi);
 
-        return $service->createProduct($this->createStoreProductRequest())->parseJson();
+        return $service->createProduct($this->createStoreProductRequest())->toArray();
     }
 }

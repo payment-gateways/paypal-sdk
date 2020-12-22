@@ -3,7 +3,7 @@
 namespace PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use PaymentGateway\PayPalSdk\Constants\ProductType;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
 use PaymentGateway\PayPalSdk\Tests\Mocks\BaseMock;
 use PaymentGateway\PayPalSdk\Tests\Mocks\Concerns\HasBasicAuthentication;
