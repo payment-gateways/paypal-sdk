@@ -4,7 +4,6 @@ namespace PaymentGateway\PayPalSdk;
 
 use EasyHttp\GuzzleLayer\GuzzleClient;
 use EasyHttp\LayerContracts\Contracts\EasyClientContract;
-use EasyHttp\LayerContracts\Contracts\HttpClientResponse;
 use PaymentGateway\PayPalSdk\Contracts\PayPalResponse;
 use PaymentGateway\PayPalSdk\Responses\GetResponse;
 use PaymentGateway\PayPalSdk\Responses\PostResponse;
