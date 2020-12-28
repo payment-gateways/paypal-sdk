@@ -40,6 +40,26 @@ class PayPalProductsServiceTest extends TestCase
     /**
      * @test
      */
+    public function itCanCreateAProductWithOnlyRequiredParameters()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+
+        $product = new StoreProductRequest('My new product', ProductType::SERVICE);
+
+        $payPalApi = new PayPalApiMock();
+        $service->withHandler($payPalApi);
+        $response = $service->createProduct($product);
+        $json = $response->toArray();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
+        $this->assertSame('My new product', $json['name']);
+    }
+
+    /**
+     * @test
+     */
     public function itCanCreateAProduct()
     {
         $service = new PayPalService($this->baseUri);
