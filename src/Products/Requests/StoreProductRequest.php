@@ -54,19 +54,19 @@ class StoreProductRequest
             'type' => $this->type,
         ];
 
-        if ($this->description) {
+        if ($this->description ?? null) {
             $request['description'] = $this->description;
         }
 
-        if ($this->category) {
+        if ($this->category ?? null) {
             $request['category'] = $this->category;
         }
 
-        if ($this->imageUrl) {
+        if ($this->imageUrl ?? null) {
             $request['image_url'] = $this->imageUrl;
         }
 
-        if ($this->homeUrl) {
+        if ($this->homeUrl ?? null) {
             $request['home_url'] = $this->homeUrl;
         }
 
