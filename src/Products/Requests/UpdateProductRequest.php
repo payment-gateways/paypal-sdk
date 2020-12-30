@@ -30,7 +30,7 @@ class UpdateProductRequest
     {
         $request = [];
 
-        if ($this->description) {
+        if ($this->description ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/description',
@@ -38,7 +38,7 @@ class UpdateProductRequest
             ];
         }
 
-        if ($this->category) {
+        if ($this->category ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/category',
@@ -46,7 +46,7 @@ class UpdateProductRequest
             ];
         }
 
-        if ($this->imageUrl) {
+        if ($this->imageUrl ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/image_url',
@@ -54,7 +54,7 @@ class UpdateProductRequest
             ];
         }
 
-        if ($this->homeUrl) {
+        if ($this->homeUrl ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/home_url',
