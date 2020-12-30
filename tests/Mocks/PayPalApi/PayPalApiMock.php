@@ -105,15 +105,17 @@ class PayPalApiMock extends BaseMock
                     $ids = array_column($this->products, 'id');
                     $position = $this->arrayPos($ids, $id);
 
-                    foreach ($json as $change) {
-                        $field = str_replace('/', '', $change['path']);
+                    if ($json) {
+                        foreach ($json as $change) {
+                            $field = str_replace('/', '', $change['path']);
 
-                        if ($change['op'] === 'add') {
-                            $this->products[$position][$field] = $this->products[$id][$field] . $change['value'];
-                        } elseif ($change['op'] === 'replace') {
-                            $this->products[$position][$field] = $change['value'];
-                        } elseif ($change['op'] === 'remove') {
-                            unset($this->products[$position][$field]);
+                            if ($change['op'] === 'add') {
+                                $this->products[$position][$field] = $this->products[$id][$field] . $change['value'];
+                            } elseif ($change['op'] === 'replace') {
+                                $this->products[$position][$field] = $change['value'];
+                            } elseif ($change['op'] === 'remove') {
+                                unset($this->products[$position][$field]);
+                            }
                         }
                     }
 
