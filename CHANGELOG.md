@@ -1,5 +1,10 @@
 # Release Notes for 1.x
 
+## [v1.0.2 (2020-12-29)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.1...v1.0.2)
+
+### Fixed
+- Properties accessed before initialization in UpdateProductRequest ([#30](https://github.com/payment-gateways/paypal-sdk/pull/30))
+
 ## [v1.0.1 (2020-12-28)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.0...v1.0.1)
 
 ### Fixed
