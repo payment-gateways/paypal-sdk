@@ -14,9 +14,11 @@ class PaymentPreferences
 
     protected string $setupFeeFailureAction = InitialPaymentFailureAction::CANCEL;
 
-    public function __construct(Money $setupFee)
+    public function __construct(?Money $setupFee = null)
     {
-        $this->setupFee = $setupFee;
+        if ($setupFee) {
+            $this->setSetupFee($setupFee);
+        }
     }
 
     public function getSetupFee(): Money
