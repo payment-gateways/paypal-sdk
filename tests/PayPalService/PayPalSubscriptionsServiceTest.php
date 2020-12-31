@@ -103,8 +103,8 @@ class PayPalSubscriptionsServiceTest extends TestCase
         $plan = $this->fakePlan($service, $product['id'], $payPalApi);
 
         $value = random_int(0, 100);
-        $money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, $value);
-        $paymentPreferences = new PaymentPreferences($money);
+        $paymentPreferences = new PaymentPreferences();
+        $paymentPreferences->setSetupFee(new Money(CurrencyCode::UNITED_STATES_DOLLAR, $value));
         $planRequest = new UpdatePlanRequest($plan['id']);
         $planRequest->setPaymentPreferences($paymentPreferences);
 

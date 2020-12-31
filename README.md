@@ -189,8 +189,8 @@ use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
-$money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, '250');
-$paymentPreferences = new PaymentPreferences($money);
+$paymentPreferences = new PaymentPreferences();
+$paymentPreferences->setSetupFee(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '250'));
 $planRequest = new UpdatePlanRequest('P-18T532823A424032WL7NIVUA');
 $planRequest->setPaymentPreferences($paymentPreferences);
 
