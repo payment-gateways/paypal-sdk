@@ -117,4 +117,25 @@ class PayPalSubscriptionsServiceTest extends TestCase
             $payPalApi->getPlan($plan['id'])['payment_preferences']['setup_fee']['value']
         );
     }
+
+    /**
+     * @test
+     */
+    public function itCanUpdateAPlanWithTheMinimumData()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+        $payPalApi = new PayPalApiMock();
+        $product = $this->fakeProduct($service, $payPalApi);
+        $plan = $this->fakePlan($service, $product['id'], $payPalApi);
+
+        $paymentPreferences = new PaymentPreferences();
+        $planRequest = new UpdatePlanRequest($plan['id']);
+        $planRequest->setPaymentPreferences($paymentPreferences);
+
+        $response = $service->updatePlan($planRequest);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(204, $response->getResponse()->getStatusCode());
+    }
 }
