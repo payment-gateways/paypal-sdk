@@ -50,11 +50,14 @@ class UpdatePlanRequest
                 'path' => '/payment_preferences/setup_fee_failure_action',
                 'value' => $this->paymentPreferences->getSetupFeeFailureAction()
             ];
-            $request[] = [
-                'op' => 'replace',
-                'path' => '/payment_preferences/setup_fee',
-                'value' => $this->paymentPreferences->getSetupFee()->toArray()
-            ];
+
+            if ($this->paymentPreferences->getSetupFee()) {
+                $request[] = [
+                    'op' => 'replace',
+                    'path' => '/payment_preferences/setup_fee',
+                    'value' => $this->paymentPreferences->getSetupFee()->toArray()
+                ];
+            }
         }
 
         return $request;

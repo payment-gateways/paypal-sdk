@@ -21,9 +21,9 @@ class PaymentPreferences
         }
     }
 
-    public function getSetupFee(): Money
+    public function getSetupFee(): ?Money
     {
-        return $this->setupFee;
+        return $this->setupFee ?? null;
     }
 
     public function setSetupFee(Money $setupFee): void
@@ -63,11 +63,16 @@ class PaymentPreferences
 
     public function toArray(): array
     {
-        return [
+        $data =  [
             'auto_bill_outstanding' => $this->autoBillOutstanding,
-            'setup_fee' => $this->setupFee->toArray(),
             'setup_fee_failure_action' => $this->setupFeeFailureAction,
             'payment_failure_threshold' => $this->paymentFailureThreshold
         ];
+
+        if ($this->setupFee ?? null) {
+            $data['setup_fee'] = $this->setupFee->toArray();
+        }
+
+        return $data;
     }
 }
