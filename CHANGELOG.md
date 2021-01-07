@@ -1,5 +1,10 @@
 # Release Notes for 1.x
 
+## [v1.0.5 (2021-01-06)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.4...v1.0.5)
+
+### Fixed
+- Separate PayPalApiMock in its own project ([#35](https://github.com/payment-gateways/paypal-sdk/pull/35))
+
 ## [v1.0.4 (2020-12-30)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.3...v1.0.4)
 
 ### Fixed
