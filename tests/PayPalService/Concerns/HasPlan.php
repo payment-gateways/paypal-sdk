@@ -2,6 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns;
 
+use PaymentGateway\PayPalApiMock\PayPalApiMock;
 use PaymentGateway\PayPalSdk\PayPalService;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
@@ -10,7 +11,6 @@ use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
-use PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi\PayPalApiMock;
 
 trait HasPlan
 {

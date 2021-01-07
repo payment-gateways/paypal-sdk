@@ -213,3 +213,31 @@ if (!$response->isSuccessful()) {
     $response->toArray();
 }
 ```
+
+## Mocking
+
+You can create your own PayPal API Mock for use with `PayPalService` like this
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->withHandler($handler);
+```
+
+The handler must be a `callable` type. If you prefer, you can use the [PayPal API Mock](https://github.com/payment-gateways/paypal-api-mock)
+adding the following to your project
+
+```bash
+composer require --dev payment-gateways/paypal-api-mock
+```
+
+After, you could use the class `PayPalApiMock` as a handler
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalApiMock\PayPalApiMock;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->withHandler(new PayPalApiMock());
+```
