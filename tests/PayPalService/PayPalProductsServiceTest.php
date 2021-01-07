@@ -2,12 +2,12 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService;
 
+use PaymentGateway\PayPalApiMock\PayPalApiMock;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 use PaymentGateway\PayPalSdk\PayPalService;
 use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
 use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
-use PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi\PayPalApiMock;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasProduct;
 use PHPUnit\Framework\TestCase;
 

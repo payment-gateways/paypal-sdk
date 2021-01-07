@@ -2,6 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\PayPalService;
 
+use PaymentGateway\PayPalApiMock\PayPalApiMock;
 use PaymentGateway\PayPalSdk\PayPalService;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
@@ -12,7 +13,6 @@ use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
-use PaymentGateway\PayPalSdk\Tests\Mocks\PayPalApi\PayPalApiMock;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasPlan;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasProduct;
 use PHPUnit\Framework\TestCase;
