@@ -4,15 +4,19 @@ namespace PaymentGateway\PayPalSdk\Tests\PayPalService;
 
 use PaymentGateway\PayPalApiMock\PayPalApiMock;
 use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Subscriptions\ApplicationContext;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
+use PaymentGateway\PayPalSdk\Subscriptions\PayerName;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StoreSubscriptionRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Subscriber;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasPlan;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasProduct;
 use PHPUnit\Framework\TestCase;
@@ -22,9 +26,9 @@ class PayPalSubscriptionsServiceTest extends TestCase
     use HasProduct;
     use HasPlan;
 
-    protected $username = 'AeA1QIZXiflr1_-r0U2UbWTziOWX1GRQer5jkUq4ZfWT5qwb6qQRPq7jDtv57TL4POEEezGLdutcxnkJ';
-    protected $password = 'ECYYrrSHdKfk_Q0EdvzdGkzj58a66kKaUQ5dZAEv4HvvtDId2_DpSuYDB088BZxGuMji7G4OFUnPog6p';
-    protected $baseUri = 'https://api.sandbox.paypal.com';
+    protected string $username = 'AeA1QIZXiflr1_-r0U2UbWTziOWX1GRQer5jkUq4ZfWT5qwb6qQRPq7jDtv57TL4POEEezGLdutcxnkJ';
+    protected string $password = 'ECYYrrSHdKfk_Q0EdvzdGkzj58a66kKaUQ5dZAEv4HvvtDId2_DpSuYDB088BZxGuMji7G4OFUnPog6p';
+    protected string $baseUri = 'https://api.sandbox.paypal.com';
 
     /**
      * @test
@@ -137,5 +141,75 @@ class PayPalSubscriptionsServiceTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame(204, $response->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function itCanCreateASubscriptionWithTheMinimumData()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+        $service->withHandler(new PayPalApiMock());
+
+        $subscriptionRequest = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+        $response = $service->createSubscription($subscriptionRequest);
+        $json = $response->toArray();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
+        $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('create_time', $json);
+        $this->assertArrayHasKey('links', $json);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanCreateASubscriptionWithSubscriberInfo()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+        $service->withHandler(new PayPalApiMock());
+
+        $subscriptionRequest = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+        $subscriber = new Subscriber();
+        $name = new PayerName();
+        $name->setGivenName('John Doe');
+        $subscriber->setName($name);
+        $subscriptionRequest->setSubscriber($subscriber);
+        $response = $service->createSubscription($subscriptionRequest);
+        $json = $response->toArray();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
+        $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('create_time', $json);
+        $this->assertArrayHasKey('links', $json);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanCreateASubscriptionWithApplicationContext()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+        $service->withHandler(new PayPalApiMock());
+
+        $subscriptionRequest = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+        $applicationContext = new ApplicationContext('http://example.com/return-url', 'http://example.com/cancel-url');
+        $subscriptionRequest->setApplicationContext($applicationContext);
+        $response = $service->createSubscription($subscriptionRequest);
+        $json = $response->toArray();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(201, $response->getResponse()->getStatusCode());
+        $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('create_time', $json);
+        $this->assertArrayHasKey('links', $json);
     }
 }
