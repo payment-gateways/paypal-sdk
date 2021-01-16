@@ -15,9 +15,11 @@ class Subscriber
         return $this->name;
     }
 
-    public function setName(?PayerName $name): void
+    public function setName(?PayerName $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getEmailAddress(): ?string
@@ -25,9 +27,11 @@ class Subscriber
         return $this->emailAddress;
     }
 
-    public function setEmailAddress(?string $emailAddress): void
+    public function setEmailAddress(?string $emailAddress): self
     {
         $this->emailAddress = $emailAddress;
+
+        return $this;
     }
 
     public function getPayerId(): ?string
@@ -35,9 +39,11 @@ class Subscriber
         return $this->payerId;
     }
 
-    public function setPayerId(?string $payerId): void
+    public function setPayerId(?string $payerId): self
     {
         $this->payerId = $payerId;
+
+        return $this;
     }
 
     public function getPhone(): ?Phone
@@ -45,9 +51,11 @@ class Subscriber
         return $this->phone;
     }
 
-    public function setPhone(?Phone $phone): void
+    public function setPhone(?Phone $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
     }
 
     public function getShippingAddress(): ?ShippingAddress
@@ -55,9 +63,11 @@ class Subscriber
         return $this->shippingAddress;
     }
 
-    public function setShippingAddress(?ShippingAddress $shippingAddress): void
+    public function setShippingAddress(?ShippingAddress $shippingAddress): self
     {
         $this->shippingAddress = $shippingAddress;
+
+        return $this;
     }
 
     public function toArray(): array

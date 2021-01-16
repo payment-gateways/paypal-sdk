@@ -26,9 +26,11 @@ class StoreSubscriptionRequest
         return $this->planId;
     }
 
-    public function setPlanId(string $planId): void
+    public function setPlanId(string $planId): self
     {
         $this->planId = $planId;
+
+        return $this;
     }
 
     public function getStartTime(): ?string
@@ -36,9 +38,11 @@ class StoreSubscriptionRequest
         return $this->startTime;
     }
 
-    public function setStartTime(?string $startTime): void
+    public function setStartTime(?string $startTime): self
     {
         $this->startTime = $startTime;
+
+        return $this;
     }
 
     public function getQuantity(): ?string
@@ -46,9 +50,11 @@ class StoreSubscriptionRequest
         return $this->quantity;
     }
 
-    public function setQuantity(?string $quantity): void
+    public function setQuantity(?string $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
     }
 
     public function getShippingAmount(): ?Money
@@ -56,9 +62,11 @@ class StoreSubscriptionRequest
         return $this->shippingAmount;
     }
 
-    public function setShippingAmount(?Money $shippingAmount): void
+    public function setShippingAmount(?Money $shippingAmount): self
     {
         $this->shippingAmount = $shippingAmount;
+
+        return $this;
     }
 
     public function getSubscriber(): ?Subscriber
@@ -66,9 +74,11 @@ class StoreSubscriptionRequest
         return $this->subscriber;
     }
 
-    public function setSubscriber(?Subscriber $subscriber): void
+    public function setSubscriber(?Subscriber $subscriber): self
     {
         $this->subscriber = $subscriber;
+
+        return $this;
     }
 
     public function getApplicationContext(): ?ApplicationContext
@@ -76,9 +86,11 @@ class StoreSubscriptionRequest
         return $this->applicationContext;
     }
 
-    public function setApplicationContext(?ApplicationContext $applicationContext): void
+    public function setApplicationContext(?ApplicationContext $applicationContext): self
     {
         $this->applicationContext = $applicationContext;
+
+        return $this;
     }
 
     public function getCustomId(): ?string
@@ -86,9 +98,11 @@ class StoreSubscriptionRequest
         return $this->customId;
     }
 
-    public function setCustomId(?string $customId): void
+    public function setCustomId(?string $customId): self
     {
         $this->customId = $customId;
+
+        return $this;
     }
 
     public function toArray(): array

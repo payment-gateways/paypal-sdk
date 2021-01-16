@@ -23,9 +23,11 @@ class ApplicationContext
         return $this->brandName;
     }
 
-    public function setBrandName(?string $brandName): void
+    public function setBrandName(?string $brandName): self
     {
         $this->brandName = $brandName;
+
+        return $this;
     }
 
     public function getLocale(): ?string
@@ -33,9 +35,11 @@ class ApplicationContext
         return $this->locale;
     }
 
-    public function setLocale(?string $locale): void
+    public function setLocale(?string $locale): self
     {
         $this->locale = $locale;
+
+        return $this;
     }
 
     public function getShippingPreference(): ?string
@@ -43,12 +47,11 @@ class ApplicationContext
         return $this->shippingPreference;
     }
 
-    /**
-     * @param string|null $shippingPreference
-     */
-    public function setShippingPreference(?string $shippingPreference): void
+    public function setShippingPreference(?string $shippingPreference): self
     {
         $this->shippingPreference = $shippingPreference;
+
+        return $this;
     }
 
     public function getUserAction(): ?string
@@ -56,9 +59,11 @@ class ApplicationContext
         return $this->userAction;
     }
 
-    public function setUserAction(?string $userAction): void
+    public function setUserAction(?string $userAction): self
     {
         $this->userAction = $userAction;
+
+        return $this;
     }
 
     public function getPaymentMethod(): ?PaymentMethod
@@ -66,9 +71,11 @@ class ApplicationContext
         return $this->paymentMethod;
     }
 
-    public function setPaymentMethod(?PaymentMethod $paymentMethod): void
+    public function setPaymentMethod(?PaymentMethod $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
     }
 
     public function getReturnUrl(): string
@@ -76,9 +83,11 @@ class ApplicationContext
         return $this->returnUrl;
     }
 
-    public function setReturnUrl(string $returnUrl): void
+    public function setReturnUrl(string $returnUrl): self
     {
         $this->returnUrl = $returnUrl;
+
+        return $this;
     }
 
     public function getCancelUrl(): string
@@ -86,9 +95,11 @@ class ApplicationContext
         return $this->cancelUrl;
     }
 
-    public function setCancelUrl(string $cancelUrl): void
+    public function setCancelUrl(string $cancelUrl): self
     {
         $this->cancelUrl = $cancelUrl;
+
+        return $this;
     }
 
     public function toArray(): array

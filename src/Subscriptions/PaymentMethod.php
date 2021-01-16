@@ -13,9 +13,11 @@ class PaymentMethod
         return $this->payerSelected;
     }
 
-    public function setPayerSelected(?string $payerSelected): void
+    public function setPayerSelected(?string $payerSelected): self
     {
         $this->payerSelected = $payerSelected;
+
+        return $this;
     }
 
     public function getPayeePreferred(): ?string
@@ -23,9 +25,11 @@ class PaymentMethod
         return $this->payeePreferred;
     }
 
-    public function setPayeePreferred(?string $payeePreferred): void
+    public function setPayeePreferred(?string $payeePreferred): self
     {
         $this->payeePreferred = $payeePreferred;
+
+        return $this;
     }
 
     public function getStandardEntryClassCode(): ?string
@@ -33,9 +37,11 @@ class PaymentMethod
         return $this->standardEntryClassCode;
     }
 
-    public function setStandardEntryClassCode(?string $standardEntryClassCode): void
+    public function setStandardEntryClassCode(?string $standardEntryClassCode): self
     {
         $this->standardEntryClassCode = $standardEntryClassCode;
+
+        return $this;
     }
 
     public function toArray(): array

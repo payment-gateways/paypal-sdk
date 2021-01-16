@@ -12,9 +12,11 @@ class ShippingAddress
         return $this->name;
     }
 
-    public function setName(?ShippingDetailName $name): void
+    public function setName(?ShippingDetailName $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getAddress(): ?ShippingDetailAddressPortable
@@ -22,9 +24,11 @@ class ShippingAddress
         return $this->address;
     }
 
-    public function setAddress(?ShippingDetailAddressPortable $address): void
+    public function setAddress(?ShippingDetailAddressPortable $address): self
     {
         $this->address = $address;
+
+        return $this;
     }
 
     public function toArray(): array
