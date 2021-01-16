@@ -197,6 +197,23 @@ $planRequest->setPaymentPreferences($paymentPreferences);
 $service->updatePlan($planRequest);
 ```
 
+### Create a subscription
+
+To create a subscription use the `createSubscription` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StoreSubscriptionRequest;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+
+$subscriptionRequest = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+
+// ["status": "APPROVAL_PENDING", "id": "I-GFCGPH9100S7", ...]
+$response = $service->createSubscription($subscriptionRequest);
+```
+
 ## Error Handling
 
 In general, You can use the `toArray` method in all responses to get the service response data (except for patch operations),
