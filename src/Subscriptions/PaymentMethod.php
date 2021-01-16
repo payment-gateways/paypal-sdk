@@ -4,9 +4,9 @@ namespace PaymentGateway\PayPalSdk\Subscriptions;
 
 class PaymentMethod
 {
-    private ?string $payerSelected;
-    private ?string $payeePreferred;
-    private ?string $standardEntryClassCode;
+    private ?string $payerSelected = null;
+    private ?string $payeePreferred = null;
+    private ?string $standardEntryClassCode = null;
 
     public function getPayerSelected(): ?string
     {

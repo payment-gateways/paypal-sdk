@@ -4,8 +4,8 @@ namespace PaymentGateway\PayPalSdk\Subscriptions;
 
 class ShippingDetail
 {
-    private ?ShippingDetailName $name;
-    private ?ShippingDetailAddressPortable $address;
+    private ?ShippingDetailName $name = null;
+    private ?ShippingDetailAddressPortable $address = null;
 
     public function getName(): ?ShippingDetailName
     {
