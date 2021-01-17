@@ -197,6 +197,18 @@ $planRequest->setPaymentPreferences($paymentPreferences);
 $service->updatePlan($planRequest);
 ```
 
+### Get a subscription
+
+To get a single subscription use the `getSubscription` method.
+
+```php
+use PaymentGateway\PayPalSdk\PayPalService;
+
+$service = new PayPalService('https://api.sandbox.paypal.com');
+$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$response = $service->getSubscription('I-18T532823A424032WL7NIVUA')->toArray();
+```
+
 ### Create a subscription
 
 To create a subscription use the `createSubscription` method.

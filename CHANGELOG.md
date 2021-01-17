@@ -1,5 +1,11 @@
 # Release Notes for 1.x
 
+## [v1.1.0 (2021-01-17)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.5...v1.1.0)
+
+### Added
+- Added `createSubscription()` method in Subscriptions API ([#36](https://github.com/payment-gateways/paypal-sdk/pull/36))
+- Added `getSubscription()` method in Subscriptions API ([#37](https://github.com/payment-gateways/paypal-sdk/pull/37))
+
 ## [v1.0.5 (2021-01-06)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.4...v1.0.5)
 
 ### Fixed
