@@ -19,12 +19,14 @@ use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\Subscriber;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasPlan;
 use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasProduct;
+use PaymentGateway\PayPalSdk\Tests\PayPalService\Concerns\HasSubscription;
 use PHPUnit\Framework\TestCase;
 
 class PayPalSubscriptionsServiceTest extends TestCase
 {
     use HasProduct;
     use HasPlan;
+    use HasSubscription;
 
     protected string $username = 'AeA1QIZXiflr1_-r0U2UbWTziOWX1GRQer5jkUq4ZfWT5qwb6qQRPq7jDtv57TL4POEEezGLdutcxnkJ';
     protected string $password = 'ECYYrrSHdKfk_Q0EdvzdGkzj58a66kKaUQ5dZAEv4HvvtDId2_DpSuYDB088BZxGuMji7G4OFUnPog6p';
@@ -210,6 +212,29 @@ class PayPalSubscriptionsServiceTest extends TestCase
         $this->assertArrayHasKey('status', $json);
         $this->assertArrayHasKey('id', $json);
         $this->assertArrayHasKey('create_time', $json);
+        $this->assertArrayHasKey('links', $json);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanGetASubscription()
+    {
+        $service = new PayPalService($this->baseUri);
+        $service->setAuth($this->username, $this->password);
+        $subscription = $this->fakeSubscription($service);
+
+        $response = $service->getSubscription($subscription['id']);
+        $json = $response->toArray();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame(200, $response->getResponse()->getStatusCode());
+        $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('plan_id', $json);
+        $this->assertArrayHasKey('create_time', $json);
+        $this->assertArrayHasKey('quantity', $json);
+        $this->assertArrayHasKey('plan_overridden', $json);
         $this->assertArrayHasKey('links', $json);
     }
 }

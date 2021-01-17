@@ -132,4 +132,12 @@ class PayPalService
 
         return new PostResponse($this->client->execute());
     }
+
+    public function getSubscription(string $id): PayPalResponse
+    {
+        $this->client->prepareRequest('GET', $this->baseUri . '/v1/billing/subscriptions/' . $id);
+        $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
+
+        return new GetResponse($this->client->execute());
+    }
 }
