@@ -10,6 +10,7 @@ use PaymentGateway\PayPalSdk\Responses\PostResponse;
 use PaymentGateway\PayPalSdk\Responses\PatchResponse;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Requests\StoreSubscriptionRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 
@@ -121,5 +122,14 @@ class PayPalService
         $this->client->getRequest()->setJson($planRequest->toArray());
 
         return new PatchResponse($this->client->execute());
+    }
+
+    public function createSubscription(StoreSubscriptionRequest $subscriptionRequest): PayPalResponse
+    {
+        $this->client->prepareRequest('POST', $this->baseUri . '/v1/billing/subscriptions');
+        $this->client->getRequest()->setHeader('Authorization', 'Bearer ' . $this->getToken()['access_token']);
+        $this->client->getRequest()->setJson($subscriptionRequest->toArray());
+
+        return new PostResponse($this->client->execute());
     }
 }

@@ -12,18 +12,10 @@
 
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 
-    <rule ref="Zend">
-        <exclude name="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore" />
-    </rule>
-
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
         </properties>
-    </rule>
-
-    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
-        <severity>0</severity>
     </rule>
 
 </ruleset>
