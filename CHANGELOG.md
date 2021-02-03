@@ -1,5 +1,10 @@
 # Release Notes for 1.x
 
+## [v1.2.0 (2021-02-03)](https://github.com/payment-gateways/paypal-sdk/compare/v1.1.0...v1.2.0)
+
+### Added
+- Added support for PHP 8.0 ([#38](https://github.com/payment-gateways/paypal-sdk/pull/38))
+
 ## [v1.1.0 (2021-01-17)](https://github.com/payment-gateways/paypal-sdk/compare/v1.0.5...v1.1.0)
 
 ### Added
