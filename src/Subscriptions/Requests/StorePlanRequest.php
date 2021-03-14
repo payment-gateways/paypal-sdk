@@ -2,7 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
 
-use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
+use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPlanDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPlanStatus;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
@@ -12,19 +12,19 @@ use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 
 class StorePlanRequest
 {
-    use HasProductDescription;
+    use HasPlanDescription;
     use HasPlanStatus;
     use HasPaymentPreferences;
 
     protected string $productId;
-    protected string $name;
+    protected string $planName;
 
     protected BillingCycleSet $billingCycleSet;
 
-    public function __construct(string $productId, string $name, BillingCycleSet $billingCycleSet)
+    public function __construct(string $productId, string $planName, BillingCycleSet $billingCycleSet)
     {
         $this->productId = $productId;
-        $this->name = $name;
+        $this->planName = $planName;
         $this->billingCycleSet = $billingCycleSet;
     }
 
@@ -40,14 +40,14 @@ class StorePlanRequest
         return $this;
     }
 
-    public function getName(): string
+    public function getPlanName(): string
     {
-        return $this->name;
+        return $this->planName;
     }
 
-    public function setName(string $name): self
+    public function setPlanName(string $planName): self
     {
-        $this->name = $name;
+        $this->planName = $planName;
 
         return $this;
     }
@@ -68,12 +68,12 @@ class StorePlanRequest
     {
         $request = [
             'product_id' => $this->productId,
-            'name' => $this->name,
+            'name' => $this->planName,
             'billing_cycles' => $this->billingCycleSet->toArray()
         ];
 
         if ($this->productDescription ?? null) {
-            $request['description'] = $this->productDescription;
+            $request['description'] = $this->planDescription;
         }
 
         if ($this->planStatus ?? null) {
