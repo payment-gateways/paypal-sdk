@@ -3,13 +3,13 @@
 namespace PaymentGateway\PayPalSdk\Products\Requests;
 
 use PaymentGateway\PayPalSdk\Products\Concerns\HasProductCategory;
-use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasHomeUrl;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasImageUrl;
 
 class UpdateProductRequest
 {
-    use HasDescription;
+    use HasProductDescription;
     use HasProductCategory;
     use HasImageUrl;
     use HasHomeUrl;
@@ -30,11 +30,11 @@ class UpdateProductRequest
     {
         $request = [];
 
-        if ($this->description ?? null) {
+        if ($this->productDescription ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/description',
-                'value' => $this->description
+                'value' => $this->productDescription
             ];
         }
 

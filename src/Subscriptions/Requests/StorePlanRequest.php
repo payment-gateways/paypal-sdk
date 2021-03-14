@@ -2,7 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
 
-use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPlanStatus;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
@@ -12,7 +12,7 @@ use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 
 class StorePlanRequest
 {
-    use HasDescription;
+    use HasProductDescription;
     use HasPlanStatus;
     use HasPaymentPreferences;
 
@@ -72,8 +72,8 @@ class StorePlanRequest
             'billing_cycles' => $this->billingCycleSet->toArray()
         ];
 
-        if ($this->description ?? null) {
-            $request['description'] = $this->description;
+        if ($this->productDescription ?? null) {
+            $request['description'] = $this->productDescription;
         }
 
         if ($this->planStatus ?? null) {

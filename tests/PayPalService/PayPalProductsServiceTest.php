@@ -66,7 +66,7 @@ class PayPalProductsServiceTest extends TestCase
         $service->setAuth($this->username, $this->password);
 
         $product = new StoreProductRequest('My new product', ProductType::SERVICE);
-        $product->setDescription('product description')
+        $product->setProductDescription('product description')
             ->setProductCategory(ProductCategory::SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
@@ -152,7 +152,7 @@ class PayPalProductsServiceTest extends TestCase
         $product = $this->fakeProduct($service, $payPalApi);
 
         $productRequest = new UpdateProductRequest($product['id']);
-        $productRequest->setDescription('product description')
+        $productRequest->setProductDescription('product description')
             ->setProductCategory(ProductCategory::ACADEMIC_SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');

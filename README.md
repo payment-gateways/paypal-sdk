@@ -89,7 +89,7 @@ $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $productRequest = new StoreProductRequest('My new product', ProductType::SERVICE);
-$productRequest->setDescription('product description')
+$productRequest->setProductDescription('product description')
     ->setProductCategory(ProductCategory::SOFTWARE)
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');
@@ -111,7 +111,7 @@ $service = new PayPalService('https://api.sandbox.paypal.com');
 $service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $productRequest = new UpdateProductRequest('PROD-XY458712546854478');
-$productRequest->setDescription('product description')
+$productRequest->setProductDescription('product description')
     ->setProductCategory(ProductCategory::ACADEMIC_SOFTWARE)
     ->setImageUrl('https://example.com/productimage.jpg')
     ->setHomeUrl('https://example.com');

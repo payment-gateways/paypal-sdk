@@ -3,14 +3,14 @@
 namespace PaymentGateway\PayPalSdk\Products\Requests;
 
 use PaymentGateway\PayPalSdk\Products\Concerns\HasProductCategory;
-use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasHomeUrl;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasImageUrl;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 
 class StoreProductRequest
 {
-    use HasDescription;
+    use HasProductDescription;
     use HasProductCategory;
     use HasImageUrl;
     use HasHomeUrl;
@@ -23,9 +23,9 @@ class StoreProductRequest
      */
     protected string $productType;
 
-    public function __construct(string $name, string $productType)
+    public function __construct(string $productName, string $productType)
     {
-        $this->productName = $name;
+        $this->productName = $productName;
         $this->productType = $productType;
     }
 
@@ -60,8 +60,8 @@ class StoreProductRequest
             'type' => $this->productType,
         ];
 
-        if ($this->description ?? null) {
-            $request['description'] = $this->description;
+        if ($this->productDescription ?? null) {
+            $request['description'] = $this->productDescription;
         }
 
         if ($this->productCategory ?? null) {
