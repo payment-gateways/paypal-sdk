@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://travis-ci.com/payment-gateways/paypal-sdk"><img src="https://travis-ci.com/payment-gateways/paypal-sdk.svg?branch=master" alt="Build Status"></a>
 <a href="https://scrutinizer-ci.com/g/payment-gateways/paypal-sdk"><img src="https://img.shields.io/scrutinizer/g/payment-gateways/paypal-sdk.svg" alt="Code Quality"></a>
-<a href="https://scrutinizer-ci.com/g/payment-gateways/paypal-sdk/?branch=1.x"><img src="https://scrutinizer-ci.com/g/payment-gateways/paypal-sdk/badges/coverage.png?b=1.x" alt="Code Coverage"></a>
+<a href="https://scrutinizer-ci.com/g/payment-gateways/paypal-sdk/?branch=2.x"><img src="https://scrutinizer-ci.com/g/payment-gateways/paypal-sdk/badges/coverage.png?b=2.x" alt="Code Coverage"></a>
 </p>
 
 # PayPal SDK
