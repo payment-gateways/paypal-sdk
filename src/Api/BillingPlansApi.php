@@ -10,6 +10,15 @@ use PaymentGateway\PayPalSdk\Responses\PostResponse;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
 
+/**
+ * Billing Plans API
+ *
+ * This API is not the deprecated API /v1/payments/billing-plans.
+ * This implementation use the /v1/billing/plans endpoints instead.
+ *
+ * @see https://developer.paypal.com/docs/api/payments.billing-plans/v1/ (deprecated)
+ * @see https://developer.paypal.com/docs/api/subscriptions/v1/ (new API)
+ */
 class BillingPlansApi extends PayPalApi
 {
     public function getPlan(string $id): PayPalResponse
