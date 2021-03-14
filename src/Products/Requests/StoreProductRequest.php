@@ -2,47 +2,53 @@
 
 namespace PaymentGateway\PayPalSdk\Products\Requests;
 
-use PaymentGateway\PayPalSdk\Products\Concerns\HasCategory;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasProductCategory;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasHomeUrl;
 use PaymentGateway\PayPalSdk\Products\Concerns\HasImageUrl;
+use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 
 class StoreProductRequest
 {
     use HasDescription;
-    use HasCategory;
+    use HasProductCategory;
     use HasImageUrl;
     use HasHomeUrl;
 
-    protected string $name;
-    protected string $type;
+    protected string $productName;
 
-    public function __construct(string $name, string $type)
+    /**
+     * @var string
+     * @see ProductType
+     */
+    protected string $productType;
+
+    public function __construct(string $name, string $productType)
     {
-        $this->name = $name;
-        $this->type = $type;
+        $this->productName = $name;
+        $this->productType = $productType;
     }
 
-    public function getName(): string
+    public function getProductName(): string
     {
-        return $this->name;
+        return $this->productName;
     }
 
-    public function setName(string $name): self
+    public function setProductName(string $productName): self
     {
-        $this->name = $name;
+        $this->productName = $productName;
 
         return $this;
     }
 
-    public function getType(): string
+    public function getProductType(): string
     {
-        return $this->type;
+        return $this->productType;
     }
 
-    public function setType(string $type): self
+    public function setProductType(string $productType): self
     {
-        $this->type = $type;
+        $this->productType = $productType;
 
         return $this;
     }
@@ -50,16 +56,16 @@ class StoreProductRequest
     public function toArray(): array
     {
         $request = [
-            'name' => $this->name,
-            'type' => $this->type,
+            'name' => $this->productName,
+            'type' => $this->productType,
         ];
 
         if ($this->description ?? null) {
             $request['description'] = $this->description;
         }
 
-        if ($this->category ?? null) {
-            $request['category'] = $this->category;
+        if ($this->productCategory ?? null) {
+            $request['category'] = $this->productCategory;
         }
 
         if ($this->imageUrl ?? null) {

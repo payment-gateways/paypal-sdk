@@ -14,7 +14,7 @@ trait HasProduct
     {
         $product = new StoreProductRequest('My new product', ProductType::SERVICE);
         $product->setDescription('product description')
-            ->setCategory(ProductCategory::SOFTWARE)
+            ->setProductCategory(ProductCategory::SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
 

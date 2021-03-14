@@ -67,7 +67,7 @@ class PayPalProductsServiceTest extends TestCase
 
         $product = new StoreProductRequest('My new product', ProductType::SERVICE);
         $product->setDescription('product description')
-            ->setCategory(ProductCategory::SOFTWARE)
+            ->setProductCategory(ProductCategory::SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
 
@@ -153,7 +153,7 @@ class PayPalProductsServiceTest extends TestCase
 
         $productRequest = new UpdateProductRequest($product['id']);
         $productRequest->setDescription('product description')
-            ->setCategory(ProductCategory::ACADEMIC_SOFTWARE)
+            ->setProductCategory(ProductCategory::ACADEMIC_SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');
 
