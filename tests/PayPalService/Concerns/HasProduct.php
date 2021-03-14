@@ -13,7 +13,7 @@ trait HasProduct
     protected function createStoreProductRequest(): StoreProductRequest
     {
         $product = new StoreProductRequest('My new product', ProductType::SERVICE);
-        $product->setDescription('product description')
+        $product->setProductDescription('product description')
             ->setProductCategory(ProductCategory::SOFTWARE)
             ->setImageUrl('https://example.com/productimage.jpg')
             ->setHomeUrl('https://example.com');

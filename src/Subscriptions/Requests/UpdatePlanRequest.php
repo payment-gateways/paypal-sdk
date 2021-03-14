@@ -2,12 +2,12 @@
 
 namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
 
-use PaymentGateway\PayPalSdk\Products\Concerns\HasDescription;
+use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
 
 class UpdatePlanRequest
 {
-    use HasDescription;
+    use HasProductDescription;
     use HasPaymentPreferences;
 
     protected string $id;
@@ -26,11 +26,11 @@ class UpdatePlanRequest
     {
         $request = [];
 
-        if ($this->description ?? null) {
+        if ($this->productDescription ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/description',
-                'value' => $this->description
+                'value' => $this->productDescription
             ];
         }
 
