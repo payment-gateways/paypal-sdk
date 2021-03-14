@@ -33,21 +33,13 @@ Go to [PayPal Developer site](https://developer.paypal.com/developer/application
 These credentials can be used in the service authentication as follows:
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\SubscriptionsApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new SubscriptionsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 ```
 
-Thus, you can test the service authentication using the `getToken` method.
-
-```php
-$response = $service->getToken(); // array
-```
-
-You don't need to execute the `getToken` method for using the PayPal APIs. This function is only for testing purposes.
-
-## Catalog products API
+## Catalog Products API
 
 Merchants can use the Catalog Products API to create products, which are goods and services.
 
@@ -56,10 +48,10 @@ Merchants can use the Catalog Products API to create products, which are goods a
 To get all products use the `getProducts` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\CatalogProductsApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new CatalogProductsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getProducts()->toArray();
 ```
 
@@ -68,10 +60,10 @@ $response = $service->getProducts()->toArray();
 To get a single products use the `getProduct` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\CatalogProductsApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new CatalogProductsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getProduct('PROD-8R6565867F172242R')->toArray();
 ```
 
@@ -80,13 +72,13 @@ $response = $service->getProduct('PROD-8R6565867F172242R')->toArray();
 To create a product use the `createProduct` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\CatalogProductsApi;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductType;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
 use PaymentGateway\PayPalSdk\Products\Requests\StoreProductRequest;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new CatalogProductsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $productRequest = new StoreProductRequest('My new product', ProductType::SERVICE);
 $productRequest->setProductDescription('product description')
@@ -103,12 +95,12 @@ $response = $service->createProduct($productRequest)->toArray();
 To update a product use the `updateProduct` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\CatalogProductsApi;
 use PaymentGateway\PayPalSdk\Products\Constants\ProductCategory;
 use PaymentGateway\PayPalSdk\Products\Requests\UpdateProductRequest;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new CatalogProductsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $productRequest = new UpdateProductRequest('PROD-XY458712546854478');
 $productRequest->setProductDescription('product description')
@@ -119,19 +111,19 @@ $productRequest->setProductDescription('product description')
 $service->updateProduct($productRequest);
 ```
 
-## Subscriptions API
+## Billing Plans API
 
-You can use billing plans and subscriptions to create subscriptions that process recurring PayPal payments for physical or digital goods, or services.
+You can use billing plans and billing agreements to create an agreement for a recurring PayPal or debit card payment for goods or services.
 
 ### List plans
 
 To get all plans use the `getPlans` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new BillingPlansApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getPlans()->toArray();
 ```
 
@@ -140,10 +132,10 @@ $response = $service->getPlans()->toArray();
 To get a single plan use the `getPlan` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new BillingPlansApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getPlan('P-18T532823A424032WL7NIVUA')->toArray();
 ```
 
@@ -152,7 +144,7 @@ $response = $service->getPlan('P-18T532823A424032WL7NIVUA')->toArray();
 To create a product use the `createPlan` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
@@ -161,8 +153,8 @@ use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new BillingPlansApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $frequency = new Frequency(\PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH, 1);
 $pricingSchema = new PricingSchema(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '350'));
@@ -180,14 +172,14 @@ $response = $service->createPlan($planRequest)->toArray();
 To update a product use the `updatePlan` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new BillingPlansApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $paymentPreferences = new PaymentPreferences();
 $paymentPreferences->setSetupFee(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '250'));
@@ -197,15 +189,19 @@ $planRequest->setPaymentPreferences($paymentPreferences);
 $service->updatePlan($planRequest);
 ```
 
+## Subscriptions API
+
+You can use this API to create subscriptions that process recurring PayPal payments for physical or digital goods, or services.
+
 ### Get a subscription
 
 To get a single subscription use the `getSubscription` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\SubscriptionsApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new SubscriptionsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 $response = $service->getSubscription('I-18T532823A424032WL7NIVUA')->toArray();
 ```
 
@@ -214,11 +210,11 @@ $response = $service->getSubscription('I-18T532823A424032WL7NIVUA')->toArray();
 To create a subscription use the `createSubscription` method.
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\SubscriptionsApi;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StoreSubscriptionRequest;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
-$service->setAuth('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
+$service = new SubscriptionsApi('https://api.sandbox.paypal.com');
+$service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
 $subscriptionRequest = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
 
@@ -248,9 +244,9 @@ if (!$response->isSuccessful()) {
 You can create your own PayPal API Mock for use with `PayPalService` like this
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\SubscriptionsApi;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
+$service = new SubscriptionsApi('https://api.sandbox.paypal.com');
 $service->withHandler($handler);
 ```
 
@@ -264,9 +260,9 @@ composer require --dev payment-gateways/paypal-api-mock
 After, you could use the class `PayPalApiMock` as a handler
 
 ```php
-use PaymentGateway\PayPalSdk\PayPalService;
+use PaymentGateway\PayPalSdk\Api\SubscriptionsApi;
 use PaymentGateway\PayPalApiMock\PayPalApiMock;
 
-$service = new PayPalService('https://api.sandbox.paypal.com');
+$service = new SubscriptionsApi('https://api.sandbox.paypal.com');
 $service->withHandler(new PayPalApiMock());
 ```
