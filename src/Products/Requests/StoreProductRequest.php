@@ -15,6 +15,7 @@ class StoreProductRequest
     use HasImageUrl;
     use HasHomeUrl;
 
+    protected string $productId;
     protected string $productName;
 
     /**
@@ -27,6 +28,18 @@ class StoreProductRequest
     {
         $this->productName = $productName;
         $this->productType = $productType;
+    }
+
+    public function getProductId(): string
+    {
+        return $this->productId;
+    }
+
+    public function setProductId(string $productId): self
+    {
+        $this->productId = $productId;
+
+        return $this;
     }
 
     public function getProductName(): string
@@ -55,10 +68,14 @@ class StoreProductRequest
 
     public function toArray(): array
     {
-        $request = [
-            'name' => $this->productName,
-            'type' => $this->productType,
-        ];
+        $request = [];
+
+        if ($this->productId ?? null) {
+            $request['id'] = $this->productId;
+        }
+
+        $request['name'] = $this->productName;
+        $request['type'] = $this->productType;
 
         if ($this->productDescription ?? null) {
             $request['description'] = $this->productDescription;

@@ -25,6 +25,7 @@ class StoreProductRequestTest extends TestCase
     public function itCreatesRequestsWithProductData()
     {
         $request = new StoreProductRequest('My product', ProductType::SERVICE);
+        $request->setProductId('CAT-5584125');
         $request->setProductDescription('description');
         $request->setProductCategory(ProductCategory::SOFTWARE);
         $request->setImageUrl('http://image.com');
@@ -32,6 +33,7 @@ class StoreProductRequestTest extends TestCase
 
         $this->assertSame(
             [
+                'id' => 'CAT-5584125',
                 'name' => 'My product',
                 'type' => ProductType::SERVICE,
                 'description' => 'description',
@@ -48,6 +50,7 @@ class StoreProductRequestTest extends TestCase
      */
     public function itCanChangeRequestProperties()
     {
+        $id = $this->faker->uuid;
         $name = $this->faker->name;
         $type = ProductType::PHYSICAL;
         $description = $this->faker->paragraph;
@@ -56,6 +59,7 @@ class StoreProductRequestTest extends TestCase
         $homeUrl = $this->faker->url;
 
         $request = new StoreProductRequest('My product', ProductType::SERVICE);
+        $request->setProductId($id);
         $request->setProductName($name);
         $request->setProductType($type);
         $request->setProductDescription($description);
@@ -63,6 +67,7 @@ class StoreProductRequestTest extends TestCase
         $request->setImageUrl($imageUrl);
         $request->setHomeUrl($homeUrl);
 
+        $this->assertSame($id, $request->getProductId());
         $this->assertSame($name, $request->getProductName());
         $this->assertSame($type, $request->getProductType());
         $this->assertSame($description, $request->getProductDescription());
@@ -71,6 +76,7 @@ class StoreProductRequestTest extends TestCase
         $this->assertSame($homeUrl, $request->getHomeUrl());
         $this->assertSame(
             [
+                'id' => $id,
                 'name' => $name,
                 'type' => $type,
                 'description' => $description,
