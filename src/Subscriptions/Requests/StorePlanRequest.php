@@ -18,6 +18,7 @@ class StorePlanRequest
 
     protected string $productId;
     protected string $planName;
+    protected string $planStatus;
 
     protected BillingCycleSet $billingCycleSet;
 
@@ -52,6 +53,18 @@ class StorePlanRequest
         return $this;
     }
 
+    public function getPlanStatus(): string
+    {
+        return $this->planStatus;
+    }
+
+    public function setPlanStatus(string $planStatus): self
+    {
+        $this->planStatus = $planStatus;
+
+        return $this;
+    }
+
     public function getBillingCycleSet(): BillingCycleSet
     {
         return $this->billingCycleSet;
@@ -69,16 +82,17 @@ class StorePlanRequest
         $request = [
             'product_id' => $this->productId,
             'name' => $this->planName,
-            'billing_cycles' => $this->billingCycleSet->toArray()
         ];
 
-        if ($this->productDescription ?? null) {
+        if ($this->planDescription ?? null) {
             $request['description'] = $this->planDescription;
         }
 
         if ($this->planStatus ?? null) {
             $request['status'] = $this->planStatus;
         }
+
+        $request['billing_cycles'] = $this->billingCycleSet->toArray();
 
         if (!($this->paymentPreferences ?? null)) {
             $money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, '0');
