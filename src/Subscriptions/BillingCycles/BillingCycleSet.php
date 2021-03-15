@@ -14,6 +14,14 @@ class BillingCycleSet
         $this->billingCycles[] = $billingCycle;
     }
 
+    /**
+     * @return AbstractBillingCycle[]
+     */
+    public function getBillingCycles(): array
+    {
+        return $this->billingCycles;
+    }
+
     public function toArray(): array
     {
         $array = [];
