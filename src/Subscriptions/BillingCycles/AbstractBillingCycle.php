@@ -21,6 +21,30 @@ abstract class AbstractBillingCycle
         $this->pricingSchema = $pricingSchema;
     }
 
+    public function getFrequency(): Frequency
+    {
+        return $this->frequency;
+    }
+
+    public function setFrequency(Frequency $frequency): self
+    {
+        $this->frequency = $frequency;
+
+        return $this;
+    }
+
+    public function getPricingSchema(): PricingSchema
+    {
+        return $this->pricingSchema;
+    }
+
+    public function setPricingSchema(PricingSchema $pricingSchema): self
+    {
+        $this->pricingSchema = $pricingSchema;
+
+        return $this;
+    }
+
     public function getSequence(): int
     {
         return $this->sequence;
