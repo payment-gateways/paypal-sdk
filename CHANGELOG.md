@@ -9,6 +9,7 @@
 - Added id field in store product request ([#40](https://github.com/payment-gateways/paypal-sdk/pull/40))
 
 ### Changed
+- Changed `getId()` by `getProductId()` ([#44](https://github.com/payment-gateways/paypal-sdk/pull/44))
 - Changed `setDescription()` by `setPlanDescription()` ([#42](https://github.com/payment-gateways/paypal-sdk/pull/42))
 - Changed `setName()` by `setPlanName()` ([#42](https://github.com/payment-gateways/paypal-sdk/pull/42))
 - Now APIs are separated ([#41](https://github.com/payment-gateways/paypal-sdk/pull/41))
