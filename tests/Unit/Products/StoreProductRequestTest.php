@@ -74,6 +74,7 @@ class StoreProductRequestTest extends TestCase
         $this->assertSame($category, $request->getProductCategory());
         $this->assertSame($imageUrl, $request->getImageUrl());
         $this->assertSame($homeUrl, $request->getHomeUrl());
+
         $this->assertSame(
             [
                 'id' => $id,
