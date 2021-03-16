@@ -152,11 +152,12 @@ use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
 use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\IntervalUnit;
 
 $service = new BillingPlansApi('https://api.sandbox.paypal.com');
 $service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
 
-$frequency = new Frequency(\PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH, 1);
+$frequency = new Frequency(IntervalUnit::MONTH, 1);
 $pricingSchema = new PricingSchema(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '350'));
 $billingCycle = new RegularBillingCycle($frequency, $pricingSchema);
 $billingCycleSet = new BillingCycleSet();
