@@ -38,7 +38,10 @@ class CatalogProductsApi extends PayPalApi
 
     public function updateProduct(UpdateProductRequest $productRequest): PayPalResponse
     {
-        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/catalogs/products/' . $productRequest->getId());
+        $this->client->prepareRequest(
+            'PATCH',
+            $this->baseUri . '/v1/catalogs/products/' . $productRequest->getProductId()
+        );
         $this->setAuthentication()->setJson($productRequest->toArray());
 
         return new PatchResponse($this->client->execute());

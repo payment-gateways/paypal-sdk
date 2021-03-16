@@ -14,16 +14,23 @@ class UpdateProductRequest
     use HasImageUrl;
     use HasHomeUrl;
 
-    protected string $id;
+    protected string $productId;
 
-    public function __construct(string $id)
+    public function __construct(string $productId)
     {
-        $this->id = $id;
+        $this->productId = $productId;
     }
 
-    public function getId(): string
+    public function getProductId(): string
     {
-        return $this->id;
+        return $this->productId;
+    }
+
+    public function setProductId(string $productId): self
+    {
+        $this->productId = $productId;
+
+        return $this;
     }
 
     public function toArray(): array
