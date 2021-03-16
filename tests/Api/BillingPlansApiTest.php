@@ -7,6 +7,7 @@ use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\IntervalUnit;
 use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
@@ -114,7 +115,7 @@ class BillingPlansApiTest extends TestCase
         $service->setCredentials($this->username, $this->password);
         $service->withHandler(new HttpMock($this->builder));
 
-        $frequency = new Frequency(\PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH, 1);
+        $frequency = new Frequency(IntervalUnit::MONTH, 1);
         $pricingSchema = new PricingSchema(new Money(CurrencyCode::UNITED_STATES_DOLLAR, '350'));
         $billingCycle = new RegularBillingCycle($frequency, $pricingSchema);
         $billingCycleSet = new BillingCycleSet();
