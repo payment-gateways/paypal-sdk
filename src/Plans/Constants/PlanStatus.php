@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Subscriptions\Constants;
+namespace PaymentGateway\PayPalSdk\Plans\Constants;
 
 interface PlanStatus
 {

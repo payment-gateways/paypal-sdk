@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
+namespace PaymentGateway\PayPalSdk\Plans\Requests;
 
 use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;

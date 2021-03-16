@@ -1,12 +1,12 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Tests\Unit\BillingPlans;
+namespace PaymentGateway\PayPalSdk\Tests\Unit\Plans;
 
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
-use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Constants\PlanStatus;
+use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Tests\TestCase;
-use PaymentGateway\PayPalSdk\Tests\Unit\BillingPlans\Concerns\HasBillingCycles;
+use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasBillingCycles;
 
 class StorePlanRequestTest extends TestCase
 {
@@ -17,12 +17,15 @@ class StorePlanRequestTest extends TestCase
      */
     public function itCreatesRequestsWithMinimumData()
     {
+        $productId = $this->faker->uuid;
+        $planName = $this->faker->name;
+
         $billingCycleSet = $this->createBillingCycleSet();
-        $request = new StorePlanRequest('P-3GM32410SK6114311MAU3BLY', 'Plan Name', $billingCycleSet);
+        $request = new StorePlanRequest($productId, $planName, $billingCycleSet);
 
         $this->assertSame([
-            'product_id' => 'P-3GM32410SK6114311MAU3BLY',
-            'name' => 'Plan Name',
+            'product_id' => $productId,
+            'name' => $planName,
             'billing_cycles' => [
                 [
                     'frequency' => [
@@ -58,16 +61,20 @@ class StorePlanRequestTest extends TestCase
      */
     public function itCreatesRequestsWithPlanData()
     {
+        $productId = $this->faker->uuid;
+        $planName = $this->faker->name;
+        $description = $this->faker->paragraph;
+
         $billingCycleSet = $this->createBillingCycleSet();
 
-        $request = new StorePlanRequest('P-3GM32410SK6114311MAU3BLY', 'Plan Name', $billingCycleSet);
-        $request->setPlanDescription('Plan description');
+        $request = new StorePlanRequest($productId, $planName, $billingCycleSet);
+        $request->setPlanDescription($description);
         $request->setPlanStatus('CREATED');
 
         $this->assertSame([
-            'product_id' => 'P-3GM32410SK6114311MAU3BLY',
-            'name' => 'Plan Name',
-            'description' => 'Plan description',
+            'product_id' => $productId,
+            'name' => $planName,
+            'description' => $description,
             'status' => 'CREATED',
             'billing_cycles' => [
                 [
