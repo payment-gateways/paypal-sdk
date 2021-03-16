@@ -7,10 +7,12 @@ use PaymentGateway\PayPalSdk\Plans\Constants\PlanStatus;
 use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Tests\TestCase;
 use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasBillingCycles;
+use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasPaymentPreferences;
 
 class StorePlanRequestTest extends TestCase
 {
     use HasBillingCycles;
+    use HasPaymentPreferences;
 
     /**
      * @test
@@ -123,6 +125,8 @@ class StorePlanRequestTest extends TestCase
         $request->setPlanStatus($status);
         $billingCycleSet = $this->createBillingCycleSet();
         $request->setBillingCycleSet($billingCycleSet);
+        $paymentPreferences = $this->createPaymentPreferences();
+        $request->setPaymentPreferences($paymentPreferences);
         $json = $request->toArray();
 
         $this->assertSame($id, $request->getProductId());
@@ -159,7 +163,7 @@ class StorePlanRequestTest extends TestCase
                 'payment_failure_threshold' => 0,
                 'setup_fee' => [
                     'currency_code' => 'USD',
-                    'value' => '0'
+                    'value' => $paymentPreferences->getSetupFee()->getValue()
                 ]
             ]
         ], $json);
