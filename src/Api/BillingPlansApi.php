@@ -47,7 +47,7 @@ class BillingPlansApi extends PayPalApi
 
     public function updatePlan(UpdatePlanRequest $planRequest): PayPalResponse
     {
-        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/billing/plans/' . $planRequest->getId());
+        $this->client->prepareRequest('PATCH', $this->baseUri . '/v1/billing/plans/' . $planRequest->getPlanId());
         $this->setAuthentication()->setJson($planRequest->toArray());
 
         return new PatchResponse($this->client->execute());
