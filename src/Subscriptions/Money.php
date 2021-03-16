@@ -19,9 +19,23 @@ class Money
         return $this->currencyCode;
     }
 
+    public function setCurrencyCode(string $currencyCode): self
+    {
+        $this->currencyCode = $currencyCode;
+
+        return $this;
+    }
+
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    public function setValue(string $value): self
+    {
+        $this->value = $value;
+
+        return $this;
     }
 
     public function toArray(): array
