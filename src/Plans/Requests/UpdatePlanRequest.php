@@ -2,35 +2,42 @@
 
 namespace PaymentGateway\PayPalSdk\Plans\Requests;
 
-use PaymentGateway\PayPalSdk\Products\Concerns\HasProductDescription;
+use PaymentGateway\PayPalSdk\Plans\Concerns\HasPlanDescription;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
 
 class UpdatePlanRequest
 {
-    use HasProductDescription;
+    use HasPlanDescription;
     use HasPaymentPreferences;
 
-    protected string $id;
+    protected string $planId;
 
-    public function __construct(string $id)
+    public function __construct(string $planId)
     {
-        $this->id = $id;
+        $this->planId = $planId;
     }
 
-    public function getId(): string
+    public function getPlanId(): string
     {
-        return $this->id;
+        return $this->planId;
+    }
+
+    public function setPlanId(string $planId): self
+    {
+        $this->planId = $planId;
+
+        return $this;
     }
 
     public function toArray(): array
     {
         $request = [];
 
-        if ($this->productDescription ?? null) {
+        if ($this->planDescription ?? null) {
             $request[] = [
                 'op' => 'replace',
                 'path' => '/description',
-                'value' => $this->productDescription
+                'value' => $this->planDescription
             ];
         }
 
