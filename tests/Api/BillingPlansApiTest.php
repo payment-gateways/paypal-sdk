@@ -11,8 +11,8 @@ use PaymentGateway\PayPalSdk\Subscriptions\Frequency;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Tests\Api\Concerns\HasMockBuilder;
 use PHPUnit\Framework\TestCase;
 

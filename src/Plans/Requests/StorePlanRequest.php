@@ -1,9 +1,9 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Subscriptions\Requests;
+namespace PaymentGateway\PayPalSdk\Plans\Requests;
 
-use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPlanDescription;
-use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPlanStatus;
+use PaymentGateway\PayPalSdk\Plans\Concerns\HasPlanDescription;
+use PaymentGateway\PayPalSdk\Plans\Concerns\HasPlanStatus;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\Concerns\HasPaymentPreferences;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;

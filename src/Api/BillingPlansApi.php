@@ -7,8 +7,8 @@ use PaymentGateway\PayPalSdk\PayPalApi;
 use PaymentGateway\PayPalSdk\Responses\GetResponse;
 use PaymentGateway\PayPalSdk\Responses\PatchResponse;
 use PaymentGateway\PayPalSdk\Responses\PostResponse;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\UpdatePlanRequest;
 
 /**
  * Billing Plans API

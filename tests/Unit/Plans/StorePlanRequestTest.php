@@ -1,12 +1,12 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Tests\Unit\BillingPlans;
+namespace PaymentGateway\PayPalSdk\Tests\Unit\Plans;
 
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
-use PaymentGateway\PayPalSdk\Subscriptions\Constants\PlanStatus;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Constants\PlanStatus;
+use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
 use PaymentGateway\PayPalSdk\Tests\TestCase;
-use PaymentGateway\PayPalSdk\Tests\Unit\BillingPlans\Concerns\HasBillingCycles;
+use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasBillingCycles;
 
 class StorePlanRequestTest extends TestCase
 {

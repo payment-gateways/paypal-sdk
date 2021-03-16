@@ -1,6 +1,6 @@
 <?php
 
-namespace PaymentGateway\PayPalSdk\Tests\Unit\BillingPlans\Concerns;
+namespace PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns;
 
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\BillingCycleSet;
 use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;

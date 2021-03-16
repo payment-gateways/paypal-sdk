@@ -151,7 +151,7 @@ use PaymentGateway\PayPalSdk\Subscriptions\BillingCycles\RegularBillingCycle;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PricingSchema;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
 
 $service = new BillingPlansApi('https://api.sandbox.paypal.com');
 $service->setCredentials('AeA1QIZXiflr1', 'ECYYrrSHdKfk');
@@ -175,7 +175,7 @@ To update a product use the `updatePlan` method.
 use PaymentGateway\PayPalSdk\Api\BillingPlansApi;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
-use PaymentGateway\PayPalSdk\Subscriptions\Requests\UpdatePlanRequest;
+use PaymentGateway\PayPalSdk\Plans\Requests\UpdatePlanRequest;
 use PaymentGateway\PayPalSdk\Subscriptions\PaymentPreferences;
 
 $service = new BillingPlansApi('https://api.sandbox.paypal.com');
