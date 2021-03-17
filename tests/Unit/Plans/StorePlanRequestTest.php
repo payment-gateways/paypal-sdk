@@ -5,6 +5,7 @@ namespace PaymentGateway\PayPalSdk\Tests\Unit\Plans;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Plans\Constants\PlanStatus;
 use PaymentGateway\PayPalSdk\Plans\Requests\StorePlanRequest;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\IntervalUnit;
 use PaymentGateway\PayPalSdk\Tests\TestCase;
 use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasBillingCycles;
 use PaymentGateway\PayPalSdk\Tests\Unit\Plans\Concerns\HasPaymentPreferences;
@@ -31,7 +32,7 @@ class StorePlanRequestTest extends TestCase
             'billing_cycles' => [
                 [
                     'frequency' => [
-                        'interval_unit' => \PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH,
+                        'interval_unit' => IntervalUnit::MONTH,
                         'interval_count' => $billingCycleSet->getBillingCycles()[0]->getFrequency()->getQuantity()
                     ],
                     'tenure_type' => 'REGULAR',
@@ -81,7 +82,7 @@ class StorePlanRequestTest extends TestCase
             'billing_cycles' => [
                 [
                     'frequency' => [
-                        'interval_unit' => \PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH,
+                        'interval_unit' => IntervalUnit::MONTH,
                         'interval_count' => $billingCycleSet->getBillingCycles()[0]->getFrequency()->getQuantity()
                     ],
                     'tenure_type' => 'REGULAR',
@@ -142,7 +143,7 @@ class StorePlanRequestTest extends TestCase
             'billing_cycles' => [
                 [
                     'frequency' => [
-                        'interval_unit' => \PaymentGateway\PayPalSdk\Subscriptions\Constants\Frequency::MONTH,
+                        'interval_unit' => IntervalUnit::MONTH,
                         'interval_count' => $billingCycleSet->getBillingCycles()[0]->getFrequency()->getQuantity()
                     ],
                     'tenure_type' => 'REGULAR',

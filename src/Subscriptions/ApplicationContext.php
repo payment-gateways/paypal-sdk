@@ -4,13 +4,13 @@ namespace PaymentGateway\PayPalSdk\Subscriptions;
 
 class ApplicationContext
 {
+    private string $returnUrl;
+    private string $cancelUrl;
     private ?string $brandName = null;
     private ?string $locale = null;
     private ?string $shippingPreference = null;
     private ?string $userAction = null;
     private ?PaymentMethod $paymentMethod = null;
-    private string $returnUrl;
-    private string $cancelUrl;
 
     public function __construct(string $returnUrl, string $cancelUrl)
     {

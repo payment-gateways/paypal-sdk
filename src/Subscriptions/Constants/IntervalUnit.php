@@ -2,7 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Subscriptions\Constants;
 
-interface Frequency
+interface IntervalUnit
 {
     public const DAY = 'DAY';
     public const WEEK = 'WEEK';
