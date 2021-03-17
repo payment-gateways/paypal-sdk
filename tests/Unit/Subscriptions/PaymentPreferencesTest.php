@@ -13,7 +13,7 @@ class PaymentPreferencesTest extends TestCase
     /**
      * @test
      */
-    public function itGeneratesAnEmptyArrayWithNotData()
+    public function itGeneratesAnArrayWithMinimumData()
     {
         $paymentPreferences = new PaymentPreferences();
 
@@ -27,7 +27,7 @@ class PaymentPreferencesTest extends TestCase
     /**
      * @test
      */
-    public function itGeneratesAnEmptyArrayWithSetupFee()
+    public function itGeneratesAnArrayWithSetupFee()
     {
         $paymentPreferences = new PaymentPreferences();
         $paymentPreferences->setSetupFee(new Money(CurrencyCode::AUSTRALIAN_DOLLAR, '12'));

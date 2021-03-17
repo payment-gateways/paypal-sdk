@@ -11,7 +11,7 @@ class PhoneTest extends TestCase
     /**
      * @test
      */
-    public function itGeneratesAnEmptyArrayWithNotData()
+    public function itGeneratesAnArrayWithMinimumData()
     {
         $phone = new Phone('573155047896');
 
@@ -23,7 +23,7 @@ class PhoneTest extends TestCase
     /**
      * @test
      */
-    public function itGeneratesAnEmptyArrayWithPhoneType()
+    public function itGeneratesAnArrayWithPhoneType()
     {
         $phone = new Phone('573155047896');
         $phone->setPhoneType(PhoneType::MOBILE);

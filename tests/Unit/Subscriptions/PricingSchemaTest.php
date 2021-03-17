@@ -12,7 +12,7 @@ class PricingSchemaTest extends TestCase
     /**
      * @test
      */
-    public function itGeneratesAnEmptyArrayWithAllData()
+    public function itGeneratesAnArrayWithAllData()
     {
         $money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, '30');
         $pricingSchema = new PricingSchema($money);
