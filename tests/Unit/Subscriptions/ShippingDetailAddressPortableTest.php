@@ -116,23 +116,7 @@ class ShippingDetailAddressPortableTest extends TestCase
         $this->assertSame($area2, $shippingAddress->getAdminArea2());
         $this->assertSame($postcode, $shippingAddress->getPostalCode());
 
-        $address1 = $this->faker->address;
-        $address2 = $this->faker->address;
-        $area1 = $this->faker->word;
-        $area2 = $this->faker->word;
-        $postcode = $this->faker->postcode;
         $shippingAddress->setCountryCode(CountryCode::CANADA);
-        $shippingAddress->setAddressLine1($address1);
-        $shippingAddress->setAddressLine2($address2);
-        $shippingAddress->setAdminArea1($area1);
-        $shippingAddress->setAdminArea2($area2);
-        $shippingAddress->setPostalCode($postcode);
-
         $this->assertSame(CountryCode::CANADA, $shippingAddress->getCountryCode());
-        $this->assertSame($address1, $shippingAddress->getAddressLine1());
-        $this->assertSame($address2, $shippingAddress->getAddressLine2());
-        $this->assertSame($area1, $shippingAddress->getAdminArea1());
-        $this->assertSame($area2, $shippingAddress->getAdminArea2());
-        $this->assertSame($postcode, $shippingAddress->getPostalCode());
     }
 }

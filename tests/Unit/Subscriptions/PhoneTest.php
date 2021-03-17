@@ -46,9 +46,6 @@ class PhoneTest extends TestCase
         $this->assertSame(PhoneType::MOBILE, $phone->getPhoneType());
 
         $phone->setPhoneNumber('572224444');
-        $phone->setPhoneType(PhoneType::HOME);
-
         $this->assertSame('572224444', $phone->getPhoneNumber());
-        $this->assertSame(PhoneType::HOME, $phone->getPhoneType());
     }
 }

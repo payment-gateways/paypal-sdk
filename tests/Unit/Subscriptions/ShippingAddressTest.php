@@ -57,13 +57,5 @@ class ShippingAddressTest extends TestCase
 
         $this->assertSame($shippingName, $shippingAddress->getName());
         $this->assertSame($shippingDetailAddressPortable, $shippingAddress->getAddress());
-
-        $shippingName = new ShippingDetailName($this->faker->name);
-        $shippingAddress->setName($shippingName);
-        $shippingDetailAddressPortable = new ShippingDetailAddressPortable(CountryCode::COLOMBIA);
-        $shippingAddress->setAddress($shippingDetailAddressPortable);
-
-        $this->assertSame($shippingName, $shippingAddress->getName());
-        $this->assertSame($shippingDetailAddressPortable, $shippingAddress->getAddress());
     }
 }

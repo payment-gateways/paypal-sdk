@@ -57,8 +57,6 @@ class PaymentPreferencesTest extends TestCase
         $this->assertSame(InitialPaymentFailureAction::CANCEL, $paymentPreferences->getSetupFeeFailureAction());
         $this->assertSame($money, $paymentPreferences->getSetupFee());
 
-        $money = new Money(CurrencyCode::UNITED_STATES_DOLLAR, '120');
-        $paymentPreferences->setSetupFee($money);
         $paymentPreferences->setAutoBillOutstanding(false);
         $paymentPreferences->setPaymentFailureThreshold(1);
         $paymentPreferences->setSetupFeeFailureAction(InitialPaymentFailureAction::CONTINUE);
@@ -66,6 +64,5 @@ class PaymentPreferencesTest extends TestCase
         $this->assertFalse($paymentPreferences->isAutoBillOutstanding());
         $this->assertSame(1, $paymentPreferences->getPaymentFailureThreshold());
         $this->assertSame(InitialPaymentFailureAction::CONTINUE, $paymentPreferences->getSetupFeeFailureAction());
-        $this->assertSame($money, $paymentPreferences->getSetupFee());
     }
 }

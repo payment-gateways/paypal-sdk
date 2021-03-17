@@ -65,11 +65,5 @@ class PayerNameTest extends TestCase
 
         $this->assertSame('John', $payerName->getGivenName());
         $this->assertSame('Doe', $payerName->getSurname());
-
-        $payerName->setGivenName('Steve');
-        $payerName->setSurname('Jobs');
-
-        $this->assertSame('Steve', $payerName->getGivenName());
-        $this->assertSame('Jobs', $payerName->getSurname());
     }
 }
