@@ -90,13 +90,30 @@ class ShippingDetailAddressPortable
 
     public function toArray(): array
     {
-        return [
+        $data = [
             'country_code' => $this->countryCode,
-            'address_line_1' => $this->addressLine1,
-            'address_line_2' => $this->addressLine2,
-            'admin_area_1' => $this->adminArea1,
-            'admin_area_2' => $this->adminArea2,
-            'postal_code' => $this->postalCode
         ];
+
+        if ($this->addressLine1) {
+            $data['address_line_1'] = $this->addressLine1;
+        }
+
+        if ($this->addressLine2) {
+            $data['address_line_2'] = $this->addressLine2;
+        }
+
+        if ($this->adminArea1) {
+            $data['admin_area_1'] = $this->adminArea1;
+        }
+
+        if ($this->adminArea2) {
+            $data['admin_area_2'] = $this->adminArea2;
+        }
+
+        if ($this->postalCode) {
+            $data['postal_code'] = $this->postalCode;
+        }
+
+        return $data;
     }
 }
