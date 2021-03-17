@@ -28,19 +28,13 @@ class FrequencyTest extends TestCase
     {
         $frequency = new Frequency(IntervalUnit::MONTH, 2);
 
-        $this->assertSame(
-            IntervalUnit::MONTH,
-            $frequency->getFrequency()
-        );
+        $this->assertSame(IntervalUnit::MONTH, $frequency->getFrequency());
         $this->assertSame(2, $frequency->getQuantity());
 
         $frequency->setFrequency(IntervalUnit::YEAR);
         $frequency->setQuantity(1);
 
-        $this->assertSame(
-            IntervalUnit::YEAR,
-            $frequency->getFrequency()
-        );
+        $this->assertSame(IntervalUnit::YEAR, $frequency->getFrequency());
         $this->assertSame(1, $frequency->getQuantity());
     }
 }
