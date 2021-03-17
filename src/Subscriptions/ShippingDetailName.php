@@ -4,9 +4,9 @@ namespace PaymentGateway\PayPalSdk\Subscriptions;
 
 class ShippingDetailName
 {
-    private ?string $fullName = null;
+    private string $fullName;
 
-    public function __construct(?string $fullName)
+    public function __construct(string $fullName)
     {
         $this->fullName = $fullName;
     }
@@ -16,7 +16,7 @@ class ShippingDetailName
         return $this->fullName;
     }
 
-    public function setFullName(?string $fullName): self
+    public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
 
