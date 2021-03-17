@@ -111,4 +111,37 @@ class ApplicationContextTest extends TestCase
             'payment_method' => $paymentMethod->toArray()
         ], $applicationContext->toArray());
     }
+
+    /**
+     * @test
+     */
+    public function itCanChangeItsData()
+    {
+        $returnUrl = $this->faker->url;
+        $cancelUrl = $this->faker->url;
+        $applicationContext = new ApplicationContext($returnUrl, $cancelUrl);
+        $paymentMethod = new PaymentMethod();
+        $paymentMethod->setPayerSelected('PAYPAL');
+        $applicationContext->setPaymentMethod($paymentMethod);
+        $brand = $this->faker->word;
+        $applicationContext->setBrandName($brand);
+        $applicationContext->setLocale('en-US');
+        $applicationContext->setShippingPreference(ShippingPreference::GET_FROM_FILE);
+        $applicationContext->setUserAction(UserAction::CONTINUE);
+
+        $this->assertSame($returnUrl, $applicationContext->getReturnUrl());
+        $this->assertSame($cancelUrl, $applicationContext->getCancelUrl());
+        $this->assertSame($paymentMethod, $applicationContext->getPaymentMethod());
+        $this->assertSame($brand, $applicationContext->getBrandName());
+        $this->assertSame(ShippingPreference::GET_FROM_FILE, $applicationContext->getShippingPreference());
+        $this->assertSame(UserAction::CONTINUE, $applicationContext->getUserAction());
+
+        $returnUrl = $this->faker->url;
+        $cancelUrl = $this->faker->url;
+        $applicationContext->setReturnUrl($returnUrl);
+        $applicationContext->setCancelUrl($cancelUrl);
+
+        $this->assertSame($returnUrl, $applicationContext->getReturnUrl());
+        $this->assertSame($cancelUrl, $applicationContext->getCancelUrl());
+    }
 }

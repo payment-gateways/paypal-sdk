@@ -25,11 +25,11 @@ class ShippingDetailNameTest extends TestCase
         $name = $this->faker->name;
         $shippingDetailName = new ShippingDetailName($name);
 
-        $this->assertSame(['full_name' => $name], $shippingDetailName->toArray());
+        $this->assertSame($name, $shippingDetailName->getFullName());
 
         $name = $this->faker->name;
         $shippingDetailName->setFullName($name);
 
-        $this->assertSame(['full_name' => $name], $shippingDetailName->toArray());
+        $this->assertSame($name, $shippingDetailName->getFullName());
     }
 }
