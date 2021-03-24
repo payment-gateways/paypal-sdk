@@ -183,4 +183,27 @@ class BillingPlansApiTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertSame(204, $response->getResponse()->getStatusCode());
     }
+
+    /**
+     * @test
+     */
+    public function itDetectsNotSuccessfulResponses()
+    {
+        $this->builder
+            ->when()
+                ->methodIs('GET')
+                ->pathMatch('/v1\/billing\/plans\/(P-[0-9a-zA-Z]+)/')
+            ->then()
+                ->statusCode(500)
+                ->body('Server Error');
+
+        $service = new BillingPlansApi($this->baseUri);
+        $service->setCredentials($this->username, $this->password);
+        $service->withHandler(new HttpMock($this->builder));
+
+        $response = $service->getPlan('P-3BD24823245172349MBHGMCQ');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame([], $response->toArray());
+    }
 }

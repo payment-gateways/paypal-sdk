@@ -148,4 +148,27 @@ class SubscriptionsApiTest extends TestCase
         $this->assertArrayHasKey('status', $json);
         $this->assertArrayHasKey('id', $json);
     }
+
+    /**
+     * @test
+     */
+    public function itDetectsNotSuccessfulResponses()
+    {
+        $this->builder
+            ->when()
+                ->methodIs('GET')
+                ->pathMatch('/v1\/billing\/subscriptions\/(I-[0-9a-zA-Z]+)/')
+            ->then()
+                ->statusCode(500)
+                ->body('Server Error');
+
+        $service = new SubscriptionsApi($this->baseUri);
+        $service->setCredentials($this->username, $this->password);
+        $service->withHandler(new HttpMock($this->builder));
+
+        $response = $service->getSubscription('I-7L1WCE5UKJN9');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame([], $response->toArray());
+    }
 }

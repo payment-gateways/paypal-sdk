@@ -53,7 +53,6 @@ class CatalogProductsApiTest extends TestCase
         $this->assertSame('Product name', $json['name']);
     }
 
-
     /**
      * @test
      */
@@ -200,5 +199,28 @@ class CatalogProductsApiTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame(204, $response->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function itDetectsNotSuccessfulResponses()
+    {
+        $this->builder
+            ->when()
+                ->methodIs('GET')
+                ->pathMatch('/v1\/catalogs\/products\/(PROD-[0-9a-zA-Z]+)/')
+            ->then()
+                ->statusCode(500)
+                ->body('Server Error');
+
+        $service = new CatalogProductsApi($this->baseUri);
+        $service->setCredentials($this->username, $this->password);
+        $service->withHandler(new HttpMock($this->builder));
+
+        $response = $service->getProduct('PROD-49A80826MF300605W');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame([], $response->toArray());
     }
 }
