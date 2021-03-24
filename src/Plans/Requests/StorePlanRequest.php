@@ -53,18 +53,6 @@ class StorePlanRequest
         return $this;
     }
 
-    public function getPlanStatus(): string
-    {
-        return $this->planStatus;
-    }
-
-    public function setPlanStatus(string $planStatus): self
-    {
-        $this->planStatus = $planStatus;
-
-        return $this;
-    }
-
     public function getBillingCycleSet(): BillingCycleSet
     {
         return $this->billingCycleSet;
