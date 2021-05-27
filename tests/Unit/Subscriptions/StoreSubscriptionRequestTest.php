@@ -78,7 +78,7 @@ class StoreSubscriptionRequestTest extends TestCase
     /**
      * @test
      */
-    public function itCreatesRequestsWithApplicationContext()
+    public function itCreatesRequestsWithApplicationContextData()
     {
         $returnUrl = $this->faker->url;
         $cancelUrl = $this->faker->url;
@@ -92,27 +92,6 @@ class StoreSubscriptionRequestTest extends TestCase
             [
                 'plan_id' => 'P-18T532823A424032WL7NIVUA',
                 'application_context' => $applicationContext->toArray()
-            ],
-            $request->toArray()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function itCreatesRequestsWithApplicationContextData()
-    {
-        $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
-        $applicationContext = new ApplicationContext('http://example.com/return-url', 'http://example.com/cancel-url');
-        $request->setApplicationContext($applicationContext);
-
-        $this->assertSame(
-            [
-                'plan_id' => 'P-18T532823A424032WL7NIVUA',
-                'application_context' => [
-                    'return_url' => 'http://example.com/return-url',
-                    'cancel_url' => 'http://example.com/cancel-url',
-                ]
             ],
             $request->toArray()
         );
