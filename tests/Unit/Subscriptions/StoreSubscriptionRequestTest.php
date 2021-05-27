@@ -2,6 +2,7 @@
 
 namespace PaymentGateway\PayPalSdk\Tests\Unit\Subscriptions;
 
+use DateTime;
 use PaymentGateway\PayPalSdk\Subscriptions\ApplicationContext;
 use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
 use PaymentGateway\PayPalSdk\Subscriptions\Money;
@@ -92,6 +93,38 @@ class StoreSubscriptionRequestTest extends TestCase
             [
                 'plan_id' => 'P-18T532823A424032WL7NIVUA',
                 'application_context' => $applicationContext->toArray()
+            ],
+            $request->toArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function itCanChangeOtherRequestProperties()
+    {
+        $datetime = new DateTime('2010-12-30 23:21:46');
+        $startTime = $datetime->format(DateTime::ATOM);
+        $planId = 'P-99T999999A999999WL9ZZZZZ';
+        $quantity = '10';
+        $customId = 'XX-001';
+
+        $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+        $request->setPlanId($planId);
+        $request->setStartTime($startTime);
+        $request->setQuantity($quantity);
+        $request->setCustomId($customId);
+
+        $this->assertSame($planId, $request->getPlanId());
+        $this->assertSame($startTime, $request->getStartTime());
+        $this->assertSame($quantity, $request->getQuantity());
+        $this->assertSame($customId, $request->getCustomId());
+        $this->assertSame(
+            [
+                'plan_id' => $planId,
+                'start_time' => $startTime,
+                'quantity' => $quantity,
+                'custom_id' => $customId
             ],
             $request->toArray()
         );
