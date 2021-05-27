@@ -20,6 +20,7 @@ class StoreSubscriptionRequestTest extends TestCase
     {
         $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
 
+        $this->assertSame('P-18T532823A424032WL7NIVUA', $request->getPlanId());
         $this->assertSame(['plan_id' => 'P-18T532823A424032WL7NIVUA'], $request->toArray());
     }
 
@@ -69,6 +70,28 @@ class StoreSubscriptionRequestTest extends TestCase
             [
                 'plan_id' => 'P-18T532823A424032WL7NIVUA',
                 'subscriber' => $subscriber->toArray()
+            ],
+            $request->toArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function itCreatesRequestsWithApplicationContext()
+    {
+        $returnUrl = $this->faker->url;
+        $cancelUrl = $this->faker->url;
+
+        $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+        $applicationContext = new ApplicationContext($returnUrl, $cancelUrl);
+        $request->setApplicationContext($applicationContext);
+
+        $this->assertSame($applicationContext, $request->getApplicationContext());
+        $this->assertSame(
+            [
+                'plan_id' => 'P-18T532823A424032WL7NIVUA',
+                'application_context' => $applicationContext->toArray()
             ],
             $request->toArray()
         );
