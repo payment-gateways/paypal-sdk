@@ -3,6 +3,8 @@
 namespace PaymentGateway\PayPalSdk\Tests\Unit\Subscriptions;
 
 use PaymentGateway\PayPalSdk\Subscriptions\ApplicationContext;
+use PaymentGateway\PayPalSdk\Subscriptions\Constants\CurrencyCode;
+use PaymentGateway\PayPalSdk\Subscriptions\Money;
 use PaymentGateway\PayPalSdk\Subscriptions\PayerName;
 use PaymentGateway\PayPalSdk\Subscriptions\Phone;
 use PaymentGateway\PayPalSdk\Subscriptions\Requests\StoreSubscriptionRequest;
@@ -19,6 +21,26 @@ class StoreSubscriptionRequestTest extends TestCase
         $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
 
         $this->assertSame(['plan_id' => 'P-18T532823A424032WL7NIVUA'], $request->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function itCreatesRequestsWithShippingAmount()
+    {
+        $request = new StoreSubscriptionRequest('P-18T532823A424032WL7NIVUA');
+
+        $shippingAmount = new Money(CurrencyCode::UNITED_STATES_DOLLAR, 400);
+        $request->setShippingAmount($shippingAmount);
+
+        $this->assertSame($shippingAmount, $request->getShippingAmount());
+        $this->assertSame(
+            [
+                'plan_id' => 'P-18T532823A424032WL7NIVUA',
+                'shipping_amount' => $shippingAmount->toArray()
+            ],
+            $request->toArray()
+        );
     }
 
     /**
@@ -42,6 +64,7 @@ class StoreSubscriptionRequestTest extends TestCase
         $subscriber->setPhone(new Phone($this->faker->phoneNumber));
         $request->setSubscriber($subscriber);
 
+        $this->assertSame($subscriber, $request->getSubscriber());
         $this->assertSame(
             [
                 'plan_id' => 'P-18T532823A424032WL7NIVUA',
