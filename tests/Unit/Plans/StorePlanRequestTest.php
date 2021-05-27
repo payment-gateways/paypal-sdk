@@ -135,6 +135,7 @@ class StorePlanRequestTest extends TestCase
         $this->assertSame($description, $request->getPlanDescription());
         $this->assertSame($status, $request->getPlanStatus());
         $this->assertSame($billingCycleSet, $request->getBillingCycleSet());
+        $this->assertSame($paymentPreferences, $request->getPaymentPreferences());
 
         $this->assertSame([
             'product_id' => $id,
