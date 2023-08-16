@@ -15,7 +15,16 @@ class StoreProductRequest
     use HasImageUrl;
     use HasHomeUrl;
 
+    /**
+     * The ID of the product.
+     * 
+     * You can specify the SKU for the product. If you omit the ID, the system generates it.
+     * System-generated IDs have the PROD- prefix.
+     * 
+     * @var string
+     */
     protected string $productId;
+
     protected string $productName;
 
     /**
