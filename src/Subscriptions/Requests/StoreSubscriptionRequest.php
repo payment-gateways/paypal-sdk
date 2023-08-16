@@ -11,10 +11,18 @@ class StoreSubscriptionRequest
     private string $planId;
     private ?string $startTime = null;
     private ?string $quantity = null;
+
+    /**
+     * Custom ID that you can assign to identify the subscription.
+     * Can be an invoice number.
+     * 
+     * @var string|null
+     */
+    private ?string $customId = null;
+
     private ?Money $shippingAmount = null;
     private ?Subscriber $subscriber = null;
     private ?ApplicationContext $applicationContext = null;
-    private ?string $customId = null;
 
     public function __construct(string $planId)
     {
@@ -57,6 +65,18 @@ class StoreSubscriptionRequest
         return $this;
     }
 
+    public function getCustomId(): ?string
+    {
+        return $this->customId;
+    }
+
+    public function setCustomId(?string $customId): self
+    {
+        $this->customId = $customId;
+
+        return $this;
+    }
+
     public function getShippingAmount(): ?Money
     {
         return $this->shippingAmount;
@@ -89,18 +109,6 @@ class StoreSubscriptionRequest
     public function setApplicationContext(?ApplicationContext $applicationContext): self
     {
         $this->applicationContext = $applicationContext;
-
-        return $this;
-    }
-
-    public function getCustomId(): ?string
-    {
-        return $this->customId;
-    }
-
-    public function setCustomId(?string $customId): self
-    {
-        $this->customId = $customId;
 
         return $this;
     }
