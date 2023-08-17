@@ -1,4 +1,4 @@
-<p align="center"><img src="https://blog.pleets.org/img/articles/paypal-sdk.png" height="150"></p>
+<p align="center"><img src="https://github.com/payment-gateways/paypal-sdk/assets/5879790/1e87082a-5629-44fb-abdc-b1c82b6902cb" height="200"></p>
 
 <p align="center">
 <a href="https://travis-ci.com/payment-gateways/paypal-sdk"><img src="https://travis-ci.com/payment-gateways/paypal-sdk.svg?branch=master" alt="Build Status"></a>
